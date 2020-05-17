@@ -5,3 +5,12 @@ cc_library(
     srcs = ["rand.cc"],
     hdrs = ["rand.h"],
 )
+
+cc_library(
+    name = "memory",
+    srcs = ["memory.cc"],
+    hdrs = ["memory.h"],
+    deps = [
+        ":rand",
+    ],
+)
