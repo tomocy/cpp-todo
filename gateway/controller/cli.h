@@ -1,0 +1,6 @@
+#ifndef TOMOCY_CPP_TODO_GATEWAY_CONTROLLER_CLI_H
+#define TOMOCY_CPP_TODO_GATEWAY_CONTROLLER_CLI_H
+
+namespace controller::cli {}
+
+#endif
