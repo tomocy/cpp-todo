@@ -4,6 +4,9 @@ cc_library(
     name = "controller",
     srcs = ["controller.cc"],
     hdrs = ["controller.h"],
+    visibility = [
+        "//gateway/presenter:__pkg__",
+    ],
     deps = [
         "//:todo",
     ],

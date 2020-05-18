@@ -9,5 +9,6 @@ cc_library(
     ],
     deps = [
         "//:todo",
+        "//gateway/controller",
     ],
 )
