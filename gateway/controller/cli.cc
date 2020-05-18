@@ -33,13 +33,22 @@ App::App(const controller::Renderer& ren) : renderer(ren) {}
 
 void App::Run(int n, const char* const* const args) const {
   auto converted = std::vector<std::string>(args + 1, args + n);
-  Parser().Parse(converted);
+  auto cmd = Parser().Parse(converted);
+
+  if (cmd.Name() == "user") {
+    auto app = UserApp(renderer);
+    app.Run(cmd.Args());
+    return;
+  }
+
+  ShowHelp();
 }
 
 void App::ShowHelp() const {
   std::cout << "todo" << std::endl;
   std::cout << "Usage:  [command] args..." << std::endl;
   std::cout << "Commands:" << std::endl;
+  std::cout << "  user" << std::endl;
 }
 }  // namespace controller::cli
 
@@ -48,6 +57,7 @@ UserApp::UserApp(const controller::Renderer& ren) : renderer(ren) {}
 
 void UserApp::Run(const std::vector<std::string>& args) const {
   Parser().Parse(args);
+  ShowHelp();
 }
 
 void UserApp::ShowHelp() const {
