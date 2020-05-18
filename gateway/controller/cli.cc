@@ -28,18 +28,8 @@ Command Parser::Parse(const std::vector<std::string>& args) {
 App::App(const controller::Renderer& ren) : renderer(ren) {}
 
 void App::Run(int n, const char* const* const args) const {
-  auto converted = std::vector<std::string>(args, args + n);
-  Parse(converted);
-}
-
-Command App::Parse(const std::vector<std::string>& args) const {
-  auto name = std::string("");
-  if (args.size() >= 2) {
-    name = args.at(1);
-  }
-
-  return Command(
-      name, std::vector<std::string>(std::begin(args) + 2, std::end(args)));
+  auto converted = std::vector<std::string>(args + 1, args + n);
+  Parser().Parse(converted);
 }
 
 void App::ShowHelp() const {

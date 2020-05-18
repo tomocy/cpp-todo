@@ -33,10 +33,6 @@ class App {
   void Run(int n, const char* const* args) const;
 
  private:
-  Command Parse(const std::vector<std::string>&) const;
-
-  void CreateUser(const std::string& email, const std::string& password) const;
-
   void ShowHelp() const;
 
   const controller::Renderer& renderer;
