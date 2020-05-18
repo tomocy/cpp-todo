@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "gateway/controller/controller.h"
+#include "todo.h"
 
 namespace controller::cli {
 class Command {
@@ -32,13 +33,14 @@ class Parser {
 namespace controller::cli {
 class App {
  public:
-  App(const controller::Renderer& ren);
+  App(todo::UserRepo& userRepo, const controller::Renderer& ren);
 
   void Run(int n, const char* const* args) const;
 
  private:
   void ShowHelp() const;
 
+  todo::UserRepo& userRepo;
   const controller::Renderer& renderer;
 };
 }  // namespace controller::cli
@@ -46,13 +48,14 @@ class App {
 namespace controller::cli {
 class UserApp {
  public:
-  UserApp(const controller::Renderer& ren);
+  UserApp(todo::UserRepo& repo, const controller::Renderer& ren);
 
   void Run(const std::vector<std::string>& args) const;
 
  private:
   void ShowHelp() const;
 
+  todo::UserRepo& repo;
   const controller::Renderer& renderer;
 };
 }  // namespace controller::cli

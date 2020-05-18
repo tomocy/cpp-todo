@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "gateway/controller/controller.h"
+#include "todo.h"
 
 namespace controller::cli {
 Command::Command(const std::string& name, const std::vector<std::string>& args)
@@ -29,14 +30,15 @@ Command Parser::Parse(const std::vector<std::string>& args) {
 }  // namespace controller::cli
 
 namespace controller::cli {
-App::App(const controller::Renderer& ren) : renderer(ren) {}
+App::App(todo::UserRepo& userRepo, const controller::Renderer& ren)
+    : userRepo(userRepo), renderer(ren) {}
 
 void App::Run(int n, const char* const* const args) const {
   auto converted = std::vector<std::string>(args + 1, args + n);
   auto cmd = Parser().Parse(converted);
 
   if (cmd.Name() == "user") {
-    auto app = UserApp(renderer);
+    auto app = UserApp(userRepo, renderer);
     app.Run(cmd.Args());
     return;
   }
@@ -53,7 +55,8 @@ void App::ShowHelp() const {
 }  // namespace controller::cli
 
 namespace controller::cli {
-UserApp::UserApp(const controller::Renderer& ren) : renderer(ren) {}
+UserApp::UserApp(todo::UserRepo& repo, const controller::Renderer& ren)
+    : repo(repo), renderer(ren) {}
 
 void UserApp::Run(const std::vector<std::string>& args) const {
   Parser().Parse(args);
@@ -64,5 +67,6 @@ void UserApp::ShowHelp() const {
   std::cout << "user" << std::endl;
   std::cout << "Usage:  [command] args..." << std::endl;
   std::cout << "Commands:" << std::endl;
+  std::cout << "  create" << std::endl;
 }
 }  // namespace controller::cli
