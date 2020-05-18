@@ -7,7 +7,7 @@ namespace controller {
 class Renderer {
  public:
   virtual ~Renderer() {}
-  virtual void ShowUser(const todo::User&) const = 0;
+  virtual void ShowUser(const todo::User& user) const = 0;
 };
 }  // namespace controller
 

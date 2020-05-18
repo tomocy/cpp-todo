@@ -4,8 +4,10 @@
 #include <string>
 #include <vector>
 
+#include "gateway/controller/controller.h"
+
 namespace controller::cli {
-App::App() {}
+App::App(const controller::Renderer& ren) : renderer(ren) {}
 
 void App::Run(int n, const char* const* const args) const {
   auto converted = std::vector<std::string>(args, args + n);

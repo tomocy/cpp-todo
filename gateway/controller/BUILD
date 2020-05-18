@@ -16,4 +16,7 @@ cc_library(
     visibility = [
         "//main/todo:__pkg__",
     ],
+    deps = [
+        ":controller",
+    ],
 )
