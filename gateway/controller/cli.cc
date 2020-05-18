@@ -16,6 +16,15 @@ const std::string& Command::Name() const { return name; }
 
 const std::vector<std::string>& Command::Args() const { return args; }
 
+Command Parser::Parse(const std::vector<std::string>& args) {
+  if (args.size() < 1) {
+    return Command("", args);
+  }
+
+  return Command(args.at(0), std::vector<std::string>(std::begin(args) + 1,
+                                                      std::end(args)));
+}
+
 App::App(const controller::Renderer& ren) : renderer(ren) {}
 
 void App::Run(int n, const char* const* const args) const {

@@ -21,6 +21,11 @@ class Command {
   std::vector<std::string> args;
 };
 
+class Parser {
+ public:
+  Command Parse(const std::vector<std::string>& args);
+};
+
 class App {
  public:
   App(const controller::Renderer&);
