@@ -4,6 +4,9 @@ cc_library(
     name = "usecase",
     srcs = ["usecase.cc"],
     hdrs = ["usecase.h"],
+    visibility = [
+        "//gateway/controller:__pkg__",
+    ],
     deps = [
         "//:todo",
     ],

@@ -53,6 +53,8 @@ class UserApp {
   void Run(const std::vector<std::string>& args) const;
 
  private:
+  void Create(const std::string& email, const std::string& password) const;
+
   void ShowHelp() const;
 
   todo::UserRepo& repo;

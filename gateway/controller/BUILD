@@ -22,5 +22,6 @@ cc_library(
     deps = [
         ":controller",
         "//:todo",
+        "//usecase",
     ],
 )

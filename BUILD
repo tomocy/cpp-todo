@@ -8,5 +8,6 @@ cc_library(
         "//gateway/controller:__pkg__",
         "//gateway/presenter:__pkg__",
         "//infra:__pkg__",
+        "//usecase:__pkg__",
     ],
 )

@@ -1,13 +1,12 @@
 #include "gateway/controller/cli.h"
 
 #include <iostream>
-#include <iterator>
-#include <sstream>
 #include <string>
 #include <vector>
 
 #include "gateway/controller/controller.h"
 #include "todo.h"
+#include "usecase/usecase.h"
 
 namespace controller::cli {
 Command::Command(const std::string& name, const std::vector<std::string>& args)
@@ -59,8 +58,23 @@ UserApp::UserApp(todo::UserRepo& repo, const controller::Renderer& ren)
     : repo(repo), renderer(ren) {}
 
 void UserApp::Run(const std::vector<std::string>& args) const {
-  Parser().Parse(args);
+  auto cmd = Parser().Parse(args);
+
+  if (cmd.Name() == "create") {
+    auto email = "email", password = "password";
+    Create(email, password);
+    return;
+  }
+
   ShowHelp();
+}
+
+void UserApp::Create(const std::string& email,
+                     const std::string& password) const {
+  auto create = usecase::CreateUser(repo);
+  auto user = create.Do(email, password);
+
+  renderer.ShowUser(user);
 }
 
 void UserApp::ShowHelp() const {
