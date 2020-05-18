@@ -6,5 +6,6 @@ cc_binary(
     deps = [
         "//gateway/controller:cli",
         "//gateway/presenter:text",
+        "//infra:memory",
     ],
 )
