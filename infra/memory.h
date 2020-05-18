@@ -8,7 +8,7 @@
 #include "todo.h"
 
 namespace infra::memory {
-class UserRepo {
+class UserRepo : public todo::UserRepo {
  public:
   std::string NextID();
 

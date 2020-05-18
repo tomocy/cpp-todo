@@ -10,7 +10,11 @@ cc_library(
     name = "memory",
     srcs = ["memory.cc"],
     hdrs = ["memory.h"],
+    visibility = [
+        "//main/todo:__pkg__",
+    ],
     deps = [
         ":rand",
+        "//:todo",
     ],
 )
