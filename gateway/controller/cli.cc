@@ -15,7 +15,9 @@ Command::Command(const std::string& name, const std::vector<std::string>& args)
 const std::string& Command::Name() const { return name; }
 
 const std::vector<std::string>& Command::Args() const { return args; }
+}  // namespace controller::cli
 
+namespace controller::cli {
 Command Parser::Parse(const std::vector<std::string>& args) {
   if (args.size() < 1) {
     return Command("", args);
@@ -24,7 +26,9 @@ Command Parser::Parse(const std::vector<std::string>& args) {
   return Command(args.at(0), std::vector<std::string>(std::begin(args) + 1,
                                                       std::end(args)));
 }
+}  // namespace controller::cli
 
+namespace controller::cli {
 App::App(const controller::Renderer& ren) : renderer(ren) {}
 
 void App::Run(int n, const char* const* const args) const {

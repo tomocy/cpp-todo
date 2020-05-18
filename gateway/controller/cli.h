@@ -20,15 +20,19 @@ class Command {
   std::string name;
   std::vector<std::string> args;
 };
+}  // namespace controller::cli
 
+namespace controller::cli {
 class Parser {
  public:
   Command Parse(const std::vector<std::string>& args);
 };
+}  // namespace controller::cli
 
+namespace controller::cli {
 class App {
  public:
-  App(const controller::Renderer&);
+  App(const controller::Renderer& ren);
 
   void Run(int n, const char* const* args) const;
 
