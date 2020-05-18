@@ -1,6 +1,8 @@
 #include "gateway/controller/cli.h"
 
 #include <iostream>
+#include <iterator>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -21,7 +23,15 @@ void App::Run(int n, const char* const* const args) const {
   Parse(converted);
 }
 
-void App::Parse(const std::vector<std::string>& args) const { ShowHelp(); }
+Command App::Parse(const std::vector<std::string>& args) const {
+  auto name = std::string("");
+  if (args.size() >= 2) {
+    name = args.at(1);
+  }
+
+  return Command(
+      name, std::vector<std::string>(std::begin(args) + 2, std::end(args)));
+}
 
 void App::ShowHelp() const {
   std::cout << "todo" << std::endl;

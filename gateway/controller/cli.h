@@ -28,7 +28,7 @@ class App {
   void Run(int n, const char* const* args) const;
 
  private:
-  void Parse(const std::vector<std::string>&) const;
+  Command Parse(const std::vector<std::string>&) const;
 
   void CreateUser(const std::string& email, const std::string& password) const;
 
