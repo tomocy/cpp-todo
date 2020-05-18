@@ -8,12 +8,15 @@ class User {
  public:
   User() = default;
 
-  explicit User(const std::string& id);
+  User(const std::string& id, const std::string& email);
 
   const std::string& ID() const;
 
+  const std::string& Email() const;
+
  private:
   std::string id;
+  std::string email;
 };
 }  // namespace todo
 
