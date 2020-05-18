@@ -22,6 +22,13 @@ class User {
   std::string email;
   std::string password;
 };
+
+class UserRepo {
+ public:
+  virtual ~UserRepo() {}
+  virtual std::string NextID() = 0;
+  virtual void Save(const User&) = 0;
+};
 }  // namespace todo
 
 #endif
