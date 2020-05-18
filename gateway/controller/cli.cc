@@ -42,3 +42,17 @@ void App::ShowHelp() const {
   std::cout << "Commands:" << std::endl;
 }
 }  // namespace controller::cli
+
+namespace controller::cli {
+UserApp::UserApp(const controller::Renderer& ren) : renderer(ren) {}
+
+void UserApp::Run(const std::vector<std::string>& args) const {
+  Parser().Parse(args);
+}
+
+void UserApp::ShowHelp() const {
+  std::cout << "user" << std::endl;
+  std::cout << "Usage:  [command] args..." << std::endl;
+  std::cout << "Commands:" << std::endl;
+}
+}  // namespace controller::cli

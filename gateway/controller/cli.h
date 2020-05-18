@@ -43,4 +43,18 @@ class App {
 };
 }  // namespace controller::cli
 
+namespace controller::cli {
+class UserApp {
+ public:
+  UserApp(const controller::Renderer& ren);
+
+  void Run(const std::vector<std::string>& args) const;
+
+ private:
+  void ShowHelp() const;
+
+  const controller::Renderer& renderer;
+};
+}  // namespace controller::cli
+
 #endif
