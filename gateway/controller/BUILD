@@ -1,6 +1,12 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
+    name = "controller",
+    srcs = ["controller.cc"],
+    hdrs = ["controller.h"],
+)
+
+cc_library(
     name = "cli",
     srcs = ["cli.cc"],
     hdrs = ["cli.h"],
