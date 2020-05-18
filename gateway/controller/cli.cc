@@ -7,6 +7,13 @@
 #include "gateway/controller/controller.h"
 
 namespace controller::cli {
+Command::Command(const std::string& name, const std::vector<std::string>& args)
+    : name(name), args(args) {}
+
+const std::string& Command::Name() const { return name; }
+
+const std::vector<std::string>& Command::Args() const { return args; }
+
 App::App(const controller::Renderer& ren) : renderer(ren) {}
 
 void App::Run(int n, const char* const* const args) const {

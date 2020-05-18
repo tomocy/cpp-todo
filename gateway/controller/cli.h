@@ -8,6 +8,19 @@
 #include "gateway/controller/controller.h"
 
 namespace controller::cli {
+class Command {
+ public:
+  Command(const std::string& name, const std::vector<std::string>& args);
+
+  const std::string& Name() const;
+
+  const std::vector<std::string>& Args() const;
+
+ private:
+  std::string name;
+  std::vector<std::string> args;
+};
+
 class App {
  public:
   App(const controller::Renderer&);
