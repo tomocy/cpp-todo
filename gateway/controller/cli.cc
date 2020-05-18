@@ -1,6 +1,8 @@
 #include "gateway/controller/cli.h"
 
+#include <algorithm>
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -9,22 +11,68 @@
 #include "usecase/usecase.h"
 
 namespace controller::cli {
-Command::Command(const std::string& name, const std::vector<std::string>& args)
-    : name(name), args(args) {}
+Command::Command(const std::string& name,
+                 const std::map<std::string, std::string>& flags,
+                 const std::vector<std::string>& args)
+    : name(name), flags(flags), args(args) {}
 
 const std::string& Command::Name() const { return name; }
+
+const std::map<std::string, std::string> Command::Flags() const {
+  return flags;
+}
+
+const std::string& Command::Flag(const std::string& name) const {
+  return flags.at(name);
+}
 
 const std::vector<std::string>& Command::Args() const { return args; }
 }  // namespace controller::cli
 
 namespace controller::cli {
-Command Parser::Parse(const std::vector<std::string>& args) {
+Command Parser::Parse(const std::vector<std::string>& args) const {
   if (args.size() < 1) {
-    return Command("", args);
+    return Command("", std::map<std::string, std::string>(), args);
   }
 
-  return Command(args.at(0), std::vector<std::string>(std::begin(args) + 1,
-                                                      std::end(args)));
+  auto flags = std::map<std::string, std::string>();
+  auto rest_args = std::vector<std::string>();
+
+  if (args.size() == 1) {
+    return Command(args.at(0), flags, rest_args);
+  }
+  if (args.size() == 2) {
+    rest_args.push_back(args.at(1));
+    return Command(args.at(0), flags, rest_args);
+  }
+
+  for (auto left = std::begin(args) + 1, right = std::begin(args) + 2;
+       left != std::end(args) || right != std::end(args);
+       left += 2, right += 2) {
+    if (!(IsFlag(*left))) {
+      std::for_each(left, std::end(args),
+                    [&rest_args](auto arg) { rest_args.push_back(arg); });
+      break;
+    }
+
+    flags[TrimFlagHyphen(*left)] = *right;
+  }
+
+  return Command(args.at(0), flags, rest_args);
+}
+
+bool Parser::IsFlag(const std::string& s) const {
+  auto i = s.find("-");
+  return i != std::string::npos && i == 0;
+}
+
+std::string Parser::TrimFlagHyphen(const std::string& s) const {
+  auto i = s.find_first_not_of("-");
+  if (i == std::string::npos) {
+    return s;
+  }
+
+  return s.substr(i);
 }
 }  // namespace controller::cli
 

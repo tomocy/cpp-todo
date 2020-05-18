@@ -2,6 +2,7 @@
 #define TOMOCY_CPP_TODO_GATEWAY_CONTROLLER_CLI_H
 
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -11,14 +12,21 @@
 namespace controller::cli {
 class Command {
  public:
-  Command(const std::string& name, const std::vector<std::string>& args);
+  Command(const std::string& name,
+          const std::map<std::string, std::string>& flags,
+          const std::vector<std::string>& args);
 
   const std::string& Name() const;
+
+  const std::map<std::string, std::string> Flags() const;
+
+  const std::string& Flag(const std::string& name) const;
 
   const std::vector<std::string>& Args() const;
 
  private:
   std::string name;
+  std::map<std::string, std::string> flags;
   std::vector<std::string> args;
 };
 }  // namespace controller::cli
@@ -26,7 +34,12 @@ class Command {
 namespace controller::cli {
 class Parser {
  public:
-  Command Parse(const std::vector<std::string>& args);
+  Command Parse(const std::vector<std::string>& args) const;
+
+ private:
+  bool IsFlag(const std::string& s) const;
+
+  std::string TrimFlagHyphen(const std::string& s) const;
 };
 }  // namespace controller::cli
 
