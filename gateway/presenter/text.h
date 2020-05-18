@@ -1,0 +1,6 @@
+#ifndef TOMOCY_CPP_TODO_GATEWAY_PRESENTER_TEXT_H
+#define TOMOCY_CPP_TODO_GATEWAY_PRESENTER_TEXT_H
+
+namespace presenter::text {}
+
+#endif
