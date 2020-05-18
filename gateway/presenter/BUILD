@@ -6,6 +6,7 @@ cc_library(
     hdrs = ["text.h"],
     visibility = [
         "//gateway/controller:__pkg__",
+        "//main/todo:__pkg__",
     ],
     deps = [
         "//:todo",

@@ -5,5 +5,6 @@ cc_binary(
     srcs = ["main.cc"],
     deps = [
         "//gateway/controller:cli",
+        "//gateway/presenter:text",
     ],
 )
