@@ -22,7 +22,11 @@ const std::map<std::string, std::string> Command::Flags() const {
   return flags;
 }
 
-const std::string& Command::Flag(const std::string& name) const {
+const std::string Command::Flag(const std::string& name) const {
+  if (flags.find(name) == flags.end()) {
+    return "";
+  }
+
   return flags.at(name);
 }
 
@@ -109,7 +113,7 @@ void UserApp::Run(const std::vector<std::string>& args) const {
   auto cmd = Parser().Parse(args);
 
   if (cmd.Name() == "create") {
-    auto email = "email", password = "password";
+    auto email = cmd.Flag("email"), password = cmd.Flag("password");
     Create(email, password);
     return;
   }

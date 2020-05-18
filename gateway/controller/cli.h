@@ -20,7 +20,7 @@ class Command {
 
   const std::map<std::string, std::string> Flags() const;
 
-  const std::string& Flag(const std::string& name) const;
+  const std::string Flag(const std::string& name) const;
 
   const std::vector<std::string>& Args() const;
 
