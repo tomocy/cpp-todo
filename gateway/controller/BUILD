@@ -4,6 +4,9 @@ cc_library(
     name = "controller",
     srcs = ["controller.cc"],
     hdrs = ["controller.h"],
+    deps = [
+        "//:todo",
+    ],
 )
 
 cc_library(

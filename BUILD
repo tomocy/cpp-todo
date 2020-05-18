@@ -5,6 +5,7 @@ cc_library(
     srcs = ["todo.cc"],
     hdrs = ["todo.h"],
     visibility = [
+        "//gateway/controller:__pkg__",
         "//gateway/presenter:__pkg__",
         "//infra:__pkg__",
     ],
