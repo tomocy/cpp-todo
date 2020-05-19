@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "todo.h"
 
@@ -17,6 +18,13 @@ void UserRenderer::ShowErr(const std::string& msg) const {
 }  // namespace presenter::text
 
 namespace presenter::text {
+void TaskRenderer::Show(const std::vector<todo::Task>& tasks) const {
+  for (auto task : tasks) {
+    std::cout << "-----" << std::endl;
+    Show(task);
+  }
+}
+
 void TaskRenderer::Show(const todo::Task& task) const {
   std::cout << "ID: " << task.ID() << std::endl;
   std::cout << "User ID: " << task.UserID() << std::endl;
