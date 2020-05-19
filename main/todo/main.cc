@@ -10,7 +10,7 @@ int main(int n, const char* const* const args) {
       {"test user 1",
        todo::User("test user 1", "test_user_1@example.com", "test user 1")},
   });
-  const auto ren = presenter::text::Renderer();
+  const auto ren = presenter::text::UserRenderer();
   auto app = controller::cli::App(userRepo, ren);
   app.Run(n, args);
 

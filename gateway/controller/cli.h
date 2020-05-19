@@ -46,7 +46,7 @@ class Parser {
 namespace controller::cli {
 class App {
  public:
-  App(todo::UserRepo& userRepo, const controller::Renderer& ren);
+  App(todo::UserRepo& userRepo, const controller::UserRenderer& userRen);
 
   void Run(int n, const char* const* args) const;
 
@@ -54,14 +54,14 @@ class App {
   void ShowHelp() const;
 
   todo::UserRepo& userRepo;
-  const controller::Renderer& renderer;
+  const controller::UserRenderer& userRenderer;
 };
 }  // namespace controller::cli
 
 namespace controller::cli {
 class UserApp {
  public:
-  UserApp(todo::UserRepo& repo, const controller::Renderer& ren);
+  UserApp(todo::UserRepo& repo, const controller::UserRenderer& ren);
 
   void Run(const std::vector<std::string>& args) const;
 
@@ -74,7 +74,7 @@ class UserApp {
   void ShowHelp() const;
 
   todo::UserRepo& repo;
-  const controller::Renderer& renderer;
+  const controller::UserRenderer& renderer;
 };
 }  // namespace controller::cli
 

@@ -81,15 +81,15 @@ std::string Parser::TrimFlagHyphen(const std::string& s) const {
 }  // namespace controller::cli
 
 namespace controller::cli {
-App::App(todo::UserRepo& userRepo, const controller::Renderer& ren)
-    : userRepo(userRepo), renderer(ren) {}
+App::App(todo::UserRepo& userRepo, const controller::UserRenderer& userRen)
+    : userRepo(userRepo), userRenderer(userRen) {}
 
 void App::Run(int n, const char* const* const args) const {
   auto converted = std::vector<std::string>(args + 1, args + n);
   auto cmd = Parser().Parse(converted);
 
   if (cmd.Name() == "user") {
-    auto app = UserApp(userRepo, renderer);
+    auto app = UserApp(userRepo, userRenderer);
     app.Run(cmd.Args());
     return;
   }
@@ -106,7 +106,7 @@ void App::ShowHelp() const {
 }  // namespace controller::cli
 
 namespace controller::cli {
-UserApp::UserApp(todo::UserRepo& repo, const controller::Renderer& ren)
+UserApp::UserApp(todo::UserRepo& repo, const controller::UserRenderer& ren)
     : repo(repo), renderer(ren) {}
 
 void UserApp::Run(const std::vector<std::string>& args) const {
@@ -131,7 +131,7 @@ void UserApp::Create(const std::string& email,
   auto create = usecase::CreateUser(repo);
   auto user = create.Do(email, password);
 
-  renderer.ShowUser(user);
+  renderer.Show(user);
 }
 
 void UserApp::Authenticate(const std::string& email,
@@ -143,7 +143,7 @@ void UserApp::Authenticate(const std::string& email,
     return;
   }
 
-  renderer.ShowUser(user);
+  renderer.Show(user);
 }
 
 void UserApp::ShowHelp() const {

@@ -7,9 +7,9 @@
 #include "todo.h"
 
 namespace presenter::text {
-class Renderer : public controller::Renderer {
+class UserRenderer : public controller::UserRenderer {
  public:
-  void ShowUser(const todo::User&) const override;
+  void Show(const todo::User&) const override;
   void ShowErr(const std::string& msg) const override;
 };
 }  // namespace presenter::text
