@@ -26,11 +26,11 @@ std::tuple<todo::User, bool> AuthenticateUser::Do(const std::string& email,
                                                   const std::string& password) {
   auto [user, found] = repo.FindByEmail(email);
   if (!found) {
-    return {todo::User(), found};
+    return {todo::User(), false};
   }
 
   if (user.Password() != password) {
-    return {todo::User(), found};
+    return {todo::User(), false};
   }
 
   return {user, true};
