@@ -2,6 +2,7 @@
 #define TOMOCY_CPP_TODO_USECASE_USECASE_H
 
 #include <tuple>
+#include <vector>
 
 #include "todo.h"
 
@@ -27,6 +28,18 @@ class AuthenticateUser {
 
  private:
   todo::UserRepo& repo;
+};
+}  // namespace usecase
+
+namespace usecase {
+class GetTasks {
+ public:
+  GetTasks(todo::TaskRepo& repo);
+
+  std::vector<todo::Task> Do(const std::string& userID);
+
+ private:
+  todo::TaskRepo& repo;
 };
 }  // namespace usecase
 

@@ -2,6 +2,7 @@
 
 #include <string>
 #include <tuple>
+#include <vector>
 
 #include "todo.h"
 
@@ -34,6 +35,14 @@ std::tuple<todo::User, bool> AuthenticateUser::Do(const std::string& email,
   }
 
   return {user, true};
+}
+}  // namespace usecase
+
+namespace usecase {
+GetTasks::GetTasks(todo::TaskRepo& repo) : repo(repo) {}
+
+std::vector<todo::Task> GetTasks::Do(const std::string& userID) {
+  return repo.Get(userID);
 }
 }  // namespace usecase
 
