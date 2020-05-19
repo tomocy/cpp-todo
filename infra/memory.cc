@@ -1,11 +1,29 @@
 #include "infra/memory.h"
 
+#include <map>
 #include <random>
 #include <string>
 #include <tuple>
 
 #include "infra/rand.h"
 #include "todo.h"
+
+namespace infra::memory {
+Session::Session(std::map<std::string, std::string>&& data)
+    : data(std::move(data)) {}
+
+void Session::SetAuthenticatedUserID(const std::string& id) {
+  data[kAuthenticatedUserID] = id;
+}
+
+std::tuple<std::string, bool> Session::GetAuthenticatedUserID() {
+  if (data.find(kAuthenticatedUserID) == data.end()) {
+    return {"", false};
+  }
+
+  return {data.at(kAuthenticatedUserID), true};
+}
+}  // namespace infra::memory
 
 namespace infra::memory {
 UserRepo::UserRepo(std::map<std::string, todo::User>&& users)

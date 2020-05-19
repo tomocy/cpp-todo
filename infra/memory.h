@@ -5,8 +5,27 @@
 #include <string>
 #include <tuple>
 
+#include "gateway/controller/cli.h"
 #include "infra/rand.h"
 #include "todo.h"
+
+namespace infra::memory {
+class Session : public controller::cli::Session {
+ public:
+  Session() = default;
+
+  explicit Session(std::map<std::string, std::string>&& data);
+
+  void SetAuthenticatedUserID(const std::string& id) override;
+
+  std::tuple<std::string, bool> GetAuthenticatedUserID() override;
+
+ private:
+  const std::string kAuthenticatedUserID = "authenticated_user_id";
+
+  std::map<std::string, std::string> data;
+};
+}  // namespace infra::memory
 
 namespace infra::memory {
 class UserRepo : public todo::UserRepo {

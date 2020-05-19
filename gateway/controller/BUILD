@@ -17,6 +17,7 @@ cc_library(
     srcs = ["cli.cc"],
     hdrs = ["cli.h"],
     visibility = [
+        "//infra:__pkg__",
         "//main/todo:__pkg__",
     ],
     deps = [
