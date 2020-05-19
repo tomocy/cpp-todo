@@ -81,8 +81,13 @@ std::string Parser::TrimFlagHyphen(const std::string& s) const {
 }  // namespace controller::cli
 
 namespace controller::cli {
-App::App(todo::UserRepo& userRepo, const controller::UserRenderer& userRen)
-    : userRepo(userRepo), userRenderer(userRen) {}
+App::App(todo::UserRepo& userRepo, todo::TaskRepo& taskRepo,
+         const controller::UserRenderer& userRen,
+         const controller::TaskRenderer& taskRen)
+    : userRepo(userRepo),
+      taskRepo(taskRepo),
+      userRenderer(userRen),
+      taskRenderer(taskRen) {}
 
 void App::Run(int n, const char* const* const args) const {
   auto converted = std::vector<std::string>(args + 1, args + n);
@@ -90,6 +95,11 @@ void App::Run(int n, const char* const* const args) const {
 
   if (cmd.Name() == "user") {
     auto app = UserApp(userRepo, userRenderer);
+    app.Run(cmd.Args());
+    return;
+  }
+  if (cmd.Name() == "task") {
+    auto app = TaskApp(taskRepo, taskRenderer);
     app.Run(cmd.Args());
     return;
   }
@@ -102,6 +112,7 @@ void App::ShowHelp() const {
   std::cout << "Usage:  [command] args..." << std::endl;
   std::cout << "Commands:" << std::endl;
   std::cout << "  user" << std::endl;
+  std::cout << "  task" << std::endl;
 }
 }  // namespace controller::cli
 

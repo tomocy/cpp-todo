@@ -46,7 +46,9 @@ class Parser {
 namespace controller::cli {
 class App {
  public:
-  App(todo::UserRepo& userRepo, const controller::UserRenderer& userRen);
+  App(todo::UserRepo& userRepo, todo::TaskRepo& taskRepo,
+      const controller::UserRenderer& userRen,
+      const controller::TaskRenderer& taskRen);
 
   void Run(int n, const char* const* args) const;
 
@@ -54,7 +56,9 @@ class App {
   void ShowHelp() const;
 
   todo::UserRepo& userRepo;
+  todo::TaskRepo& taskRepo;
   const controller::UserRenderer& userRenderer;
+  const controller::TaskRenderer& taskRenderer;
 };
 }  // namespace controller::cli
 
