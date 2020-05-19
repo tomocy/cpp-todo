@@ -30,4 +30,16 @@ class AuthenticateUser {
 };
 }  // namespace usecase
 
+namespace usecase {
+class CreateTask {
+ public:
+  CreateTask(todo::TaskRepo& repo);
+
+  todo::Task Do(const std::string& userID, const std::string& name);
+
+ private:
+  todo::TaskRepo& repo;
+};
+}  // namespace usecase
+
 #endif

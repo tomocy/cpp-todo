@@ -36,3 +36,16 @@ std::tuple<todo::User, bool> AuthenticateUser::Do(const std::string& email,
   return {user, true};
 }
 }  // namespace usecase
+
+namespace usecase {
+CreateTask::CreateTask(todo::TaskRepo& repo) : repo(repo) {}
+
+todo::Task CreateTask::Do(const std::string& userID, const std::string& name) {
+  auto id = repo.NextID();
+  auto task = todo::Task(id, userID, name);
+
+  repo.Save(task);
+
+  return task;
+}
+}  // namespace usecase
