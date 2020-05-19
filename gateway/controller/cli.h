@@ -78,4 +78,19 @@ class UserApp {
 };
 }  // namespace controller::cli
 
+namespace controller::cli {
+class TaskApp {
+ public:
+  TaskApp(todo::TaskRepo& repo, const controller::TaskRenderer& ren);
+
+  void Run(const std::vector<std::string>& args) const;
+
+ private:
+  void ShowHelp() const;
+
+  todo::TaskRepo& repo;
+  const controller::TaskRenderer& renderer;
+};
+}  // namespace controller::cli
+
 #endif

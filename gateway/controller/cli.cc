@@ -154,3 +154,20 @@ void UserApp::ShowHelp() const {
   std::cout << "  authenticate" << std::endl;
 }
 }  // namespace controller::cli
+
+namespace controller::cli {
+TaskApp::TaskApp(todo::TaskRepo& repo, const controller::TaskRenderer& ren)
+    : repo(repo), renderer(ren) {}
+
+void TaskApp::Run(const std::vector<std::string>& args) const {
+  auto cmd = Parser().Parse(args);
+
+  ShowHelp();
+}
+
+void TaskApp::ShowHelp() const {
+  std::cout << "task" << std::endl;
+  std::cout << "Usage:  [command] args..." << std::endl;
+  std::cout << "Commands:" << std::endl;
+}
+}  // namespace controller::cli
