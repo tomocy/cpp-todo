@@ -95,7 +95,7 @@ void App::Run(int n, const char* const* const args) const {
   auto cmd = Parser().Parse(converted);
 
   if (cmd.Name() == "user") {
-    auto app = UserApp(userRepo, userRenderer);
+    auto app = UserApp(session, userRepo, userRenderer);
     app.Run(cmd.Args());
     return;
   }
@@ -118,8 +118,9 @@ void App::ShowHelp() const {
 }  // namespace controller::cli
 
 namespace controller::cli {
-UserApp::UserApp(todo::UserRepo& repo, const controller::UserRenderer& ren)
-    : repo(repo), renderer(ren) {}
+UserApp::UserApp(Session& session, todo::UserRepo& repo,
+                 const controller::UserRenderer& ren)
+    : session(session), repo(repo), renderer(ren) {}
 
 void UserApp::Run(const std::vector<std::string>& args) const {
   auto cmd = Parser().Parse(args);
@@ -143,6 +144,8 @@ void UserApp::Create(const std::string& email,
   auto create = usecase::CreateUser(repo);
   auto user = create.Do(email, password);
 
+  session.SetAuthenticatedUserID(user.ID());
+
   renderer.Show(user);
 }
 
@@ -154,6 +157,8 @@ void UserApp::Authenticate(const std::string& email,
     renderer.ShowErr("invalid credentials");
     return;
   }
+
+  session.SetAuthenticatedUserID(user.ID());
 
   renderer.Show(user);
 }

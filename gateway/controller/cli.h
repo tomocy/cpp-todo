@@ -76,7 +76,8 @@ class App {
 namespace controller::cli {
 class UserApp {
  public:
-  UserApp(todo::UserRepo& repo, const controller::UserRenderer& ren);
+  UserApp(Session& session, todo::UserRepo& repo,
+          const controller::UserRenderer& ren);
 
   void Run(const std::vector<std::string>& args) const;
 
@@ -88,6 +89,7 @@ class UserApp {
 
   void ShowHelp() const;
 
+  Session& session;
   todo::UserRepo& repo;
   const controller::UserRenderer& renderer;
 };
