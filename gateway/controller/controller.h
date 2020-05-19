@@ -2,6 +2,7 @@
 #define TOMOCY_CPP_TODO_GATEWAY_CONTROLLER_CONTROLLER_H
 
 #include <string>
+#include <vector>
 
 #include "todo.h"
 
@@ -25,6 +26,7 @@ namespace controller {
 class TaskRenderer : public Renderer {
  public:
   virtual ~TaskRenderer() {}
+  virtual void Show(const std::vector<todo::Task>& tasks) const = 0;
   virtual void Show(const todo::Task& task) const = 0;
 };
 }  // namespace controller
