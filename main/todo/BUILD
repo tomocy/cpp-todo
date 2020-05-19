@@ -4,6 +4,7 @@ cc_binary(
     name = "todo",
     srcs = ["main.cc"],
     deps = [
+        "//:todo",
         "//gateway/controller:cli",
         "//gateway/presenter:text",
         "//infra:memory",
