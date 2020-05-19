@@ -117,6 +117,11 @@ void UserApp::Run(const std::vector<std::string>& args) const {
     Create(email, password);
     return;
   }
+  if (cmd.Name() == "authenticate") {
+    auto email = cmd.Flag("email"), password = cmd.Flag("password");
+    Authenticate(email, password);
+    return;
+  }
 
   ShowHelp();
 }
@@ -129,10 +134,23 @@ void UserApp::Create(const std::string& email,
   renderer.ShowUser(user);
 }
 
+void UserApp::Authenticate(const std::string& email,
+                           const std::string& password) const {
+  auto authenticate = usecase::AuthenticateUser(repo);
+  auto [user, ok] = authenticate.Do(email, password);
+  if (!ok) {
+    renderer.ShowErr("invalid credentials");
+    return;
+  }
+
+  renderer.ShowUser(user);
+}
+
 void UserApp::ShowHelp() const {
   std::cout << "user" << std::endl;
   std::cout << "Usage:  [command] args..." << std::endl;
   std::cout << "Commands:" << std::endl;
   std::cout << "  create" << std::endl;
+  std::cout << "  authenticate" << std::endl;
 }
 }  // namespace controller::cli

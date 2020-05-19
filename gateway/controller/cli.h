@@ -68,6 +68,9 @@ class UserApp {
  private:
   void Create(const std::string& email, const std::string& password) const;
 
+  void Authenticate(const std::string& email,
+                    const std::string& password) const;
+
   void ShowHelp() const;
 
   todo::UserRepo& repo;
