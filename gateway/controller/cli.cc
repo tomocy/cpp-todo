@@ -210,9 +210,7 @@ void TaskApp::Get(const std::string& userID) const {
   auto get = usecase::GetTasks(repo);
   auto tasks = get.Do(userID);
 
-  for (auto task : tasks) {
-    renderer.Show(task);
-  }
+  renderer.Show(tasks);
 }
 
 void TaskApp::Create(const std::string& userID, const std::string& name) const {
