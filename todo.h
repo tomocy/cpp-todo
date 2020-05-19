@@ -5,6 +5,20 @@
 #include <tuple>
 
 namespace todo {
+class Hash {
+ public:
+  Hash() = default;
+
+  explicit Hash(const std::string& plain);
+
+  bool Compare(const std::string& plain) const;
+
+ private:
+  std::size_t hash;
+};
+}  // namespace todo
+
+namespace todo {
 class User {
  public:
   User() = default;

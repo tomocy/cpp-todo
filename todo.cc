@@ -1,6 +1,16 @@
 #include "todo.h"
 
+#include <functional>
 #include <string>
+
+namespace todo {
+Hash::Hash(const std::string& plain) : hash(std::hash<std::string>{}(plain)) {}
+
+bool Hash::Compare(const std::string& plain) const {
+  auto hash = std::hash<std::string>{}(plain);
+  return this->hash == hash;
+}
+}  // namespace todo
 
 namespace todo {
 User::User(const std::string& id, const std::string& email,
