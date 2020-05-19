@@ -23,7 +23,9 @@ class User {
   std::string email;
   std::string password;
 };
+}  // namespace todo
 
+namespace todo {
 class UserRepo {
  public:
   virtual ~UserRepo() {}
