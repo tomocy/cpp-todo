@@ -81,10 +81,11 @@ std::string Parser::TrimFlagHyphen(const std::string& s) const {
 }  // namespace controller::cli
 
 namespace controller::cli {
-App::App(todo::UserRepo& userRepo, todo::TaskRepo& taskRepo,
+App::App(Session& session, todo::UserRepo& userRepo, todo::TaskRepo& taskRepo,
          const controller::UserRenderer& userRen,
          const controller::TaskRenderer& taskRen)
-    : userRepo(userRepo),
+    : session(session),
+      userRepo(userRepo),
       taskRepo(taskRepo),
       userRenderer(userRen),
       taskRenderer(taskRen) {}

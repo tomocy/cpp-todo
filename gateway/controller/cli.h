@@ -56,7 +56,7 @@ class Session {
 namespace controller::cli {
 class App {
  public:
-  App(todo::UserRepo& userRepo, todo::TaskRepo& taskRepo,
+  App(Session& session, todo::UserRepo& userRepo, todo::TaskRepo& taskRepo,
       const controller::UserRenderer& userRen,
       const controller::TaskRenderer& taskRen);
 
@@ -65,6 +65,7 @@ class App {
  private:
   void ShowHelp() const;
 
+  Session& session;
   todo::UserRepo& userRepo;
   todo::TaskRepo& taskRepo;
   const controller::UserRenderer& userRenderer;
