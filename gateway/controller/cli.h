@@ -4,6 +4,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "gateway/controller/controller.h"
@@ -40,6 +41,15 @@ class Parser {
   bool IsFlag(const std::string& s) const;
 
   std::string TrimFlagHyphen(const std::string& s) const;
+};
+}  // namespace controller::cli
+
+namespace controller::cli {
+class Session {
+ public:
+  virtual ~Session() {}
+  virtual void SetAuthenticatedUserID(const std::string& id) = 0;
+  virtual std::tuple<std::string, bool> GetAuthenticatedUserID() = 0;
 };
 }  // namespace controller::cli
 
