@@ -70,4 +70,13 @@ class Task {
 };
 }  // namespace todo
 
+namespace todo {
+class TaskRepo {
+ public:
+  virtual ~TaskRepo() {}
+  virtual std::string NextID() = 0;
+  virtual void Save(const Task&) = 0;
+};
+}  // namespace todo
+
 #endif
