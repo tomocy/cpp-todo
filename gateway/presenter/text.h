@@ -14,4 +14,12 @@ class UserRenderer : public controller::UserRenderer {
 };
 }  // namespace presenter::text
 
+namespace presenter::text {
+class TaskRenderer : public controller::TaskRenderer {
+ public:
+  void Show(const todo::Task&) const override;
+  void ShowErr(const std::string& msg) const override;
+};
+}  // namespace presenter::text
+
 #endif
