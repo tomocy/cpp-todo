@@ -10,6 +10,10 @@
 namespace infra::memory {
 class UserRepo : public todo::UserRepo {
  public:
+  UserRepo() = default;
+
+  explicit UserRepo(std::map<std::string, todo::User>&& users);
+
   std::string NextID();
 
   void Save(const todo::User&);

@@ -7,6 +7,9 @@
 #include "todo.h"
 
 namespace infra::memory {
+UserRepo::UserRepo(std::map<std::string, todo::User>&& users)
+    : users(std::move(users)) {}
+
 std::string UserRepo::NextID() { return infra::rand::Generate(30); }
 
 void UserRepo::Save(const todo::User& user) { users[user.ID()] = user; }
