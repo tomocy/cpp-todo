@@ -1,21 +1,26 @@
 #include <cstdlib>
 #include <map>
+#include <string>
 
 #include "gateway/controller/cli.h"
 #include "gateway/presenter/text.h"
 #include "infra/memory.h"
 
 int main(int n, const char* const* const args) {
-  auto session = infra::memory::Session();
-  session.SetAuthenticatedUserID("test authenticated user 1");
+  auto authenticatedUserID = std::string("test_authenticated_user_1");
 
-  auto userRepo = infra::memory::UserRepo(std::map<std::string, todo::User>{
-      {"test user 1",
-       todo::User("test user 1", "test_user_1@example.com", "test user 1")},
-  });
+  auto session = infra::memory::Session();
+  session.SetAuthenticatedUserID(authenticatedUserID);
+
+  auto userRepo = infra::memory::UserRepo();
+  userRepo.Save(todo::User(authenticatedUserID, "test@exampl.com", "aiueo"));
   const auto userRen = presenter::text::UserRenderer();
 
   auto taskRepo = infra::memory::TaskRepo();
+  for (auto i = 0; i < 10; ++i) {
+    taskRepo.Save(todo::Task(std::to_string(i), authenticatedUserID,
+                             "test task " + std::to_string(i)));
+  }
   const auto taskRen = presenter::text::TaskRenderer();
 
   auto app =
