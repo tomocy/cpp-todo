@@ -173,12 +173,26 @@ TaskApp::TaskApp(todo::TaskRepo& repo, const controller::TaskRenderer& ren)
 void TaskApp::Run(const std::vector<std::string>& args) const {
   auto cmd = Parser().Parse(args);
 
+  if (cmd.Name() == "create") {
+    auto userID = std::string("test_user_id"), name = cmd.Flag("name");
+    Create(userID, name);
+    return;
+  }
+
   ShowHelp();
+}
+
+void TaskApp::Create(const std::string& userID, const std::string& name) const {
+  auto create = usecase::CreateTask(repo);
+  auto task = create.Do(userID, name);
+
+  renderer.Show(task);
 }
 
 void TaskApp::ShowHelp() const {
   std::cout << "task" << std::endl;
   std::cout << "Usage:  [command] args..." << std::endl;
   std::cout << "Commands:" << std::endl;
+  std::cout << "  create" << std::endl;
 }
 }  // namespace controller::cli
