@@ -23,3 +23,15 @@ const std::string& User::Email() const { return email; }
 
 const Hash& User::Password() const { return password; }
 }  // namespace todo
+
+namespace todo {
+Task::Task(const std::string& id, const std::string& userID,
+           const std::string& name)
+    : id(id), userID(userID), name(name) {}
+
+const std::string& Task::ID() const { return id; }
+
+const std::string& Task::UserID() const { return userID; }
+
+const std::string& Task::Name() const { return name; }
+}  // namespace todo

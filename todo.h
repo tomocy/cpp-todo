@@ -49,4 +49,25 @@ class UserRepo {
 };
 }  // namespace todo
 
+namespace todo {
+class Task {
+ public:
+  Task() = default;
+
+  Task(const std::string& id, const std::string& userID,
+       const std::string& name);
+
+  const std::string& ID() const;
+
+  const std::string& UserID() const;
+
+  const std::string& Name() const;
+
+ private:
+  std::string id;
+  std::string userID;
+  std::string name;
+};
+}  // namespace todo
+
 #endif
