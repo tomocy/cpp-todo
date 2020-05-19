@@ -27,3 +27,12 @@ void UserRepo::Save(const todo::User& user) { users[user.ID()] = user; }
 
 const std::map<std::string, todo::User>& UserRepo::Users() { return users; }
 }  // namespace infra::memory
+
+namespace infra::memory {
+TaskRepo::TaskRepo(std::map<std::string, todo::Task>&& tasks)
+    : tasks(std::move(tasks)) {}
+
+std::string TaskRepo::NextID() { return infra::rand::Generate(50); }
+
+void TaskRepo::Save(const todo::Task& task) { tasks[task.ID()] = task; }
+}  // namespace infra::memory

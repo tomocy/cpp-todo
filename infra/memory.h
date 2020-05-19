@@ -28,4 +28,22 @@ class UserRepo : public todo::UserRepo {
 };
 }  // namespace infra::memory
 
+namespace infra::memory {
+class TaskRepo : public todo::TaskRepo {
+ public:
+  TaskRepo() = default;
+
+  explicit TaskRepo(std::map<std::string, todo::Task>&& tasks);
+
+  std::string NextID() override;
+
+  void Save(const todo::Task& task) override;
+
+  const std::map<std::string, todo::Task>& Tasks();
+
+ private:
+  std::map<std::string, todo::Task> tasks;
+};
+}  // namespace infra::memory
+
 #endif
