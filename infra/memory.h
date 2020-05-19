@@ -56,6 +56,8 @@ class TaskRepo : public todo::TaskRepo {
 
   std::string NextID() override;
 
+  std::vector<todo::Task> Get(const std::string& userID) override;
+
   void Save(const todo::Task& task) override;
 
   const std::map<std::string, todo::Task>& Tasks();

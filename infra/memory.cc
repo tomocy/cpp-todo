@@ -52,5 +52,19 @@ TaskRepo::TaskRepo(std::map<std::string, todo::Task>&& tasks)
 
 std::string TaskRepo::NextID() { return infra::rand::Generate(50); }
 
+std::vector<todo::Task> TaskRepo::Get(const std::string& userID) {
+  auto tasks = std::vector<todo::Task>();
+
+  for (auto [_, task] : this->tasks) {
+    if (task.UserID() != userID) {
+      continue;
+    }
+
+    tasks.push_back(task);
+  }
+
+  return tasks;
+}
+
 void TaskRepo::Save(const todo::Task& task) { tasks[task.ID()] = task; }
 }  // namespace infra::memory
