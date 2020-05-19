@@ -100,7 +100,7 @@ void App::Run(int n, const char* const* const args) const {
     return;
   }
   if (cmd.Name() == "task") {
-    auto app = TaskApp(taskRepo, taskRenderer);
+    auto app = TaskApp(session, taskRepo, taskRenderer);
     app.Run(cmd.Args());
     return;
   }
@@ -173,14 +173,21 @@ void UserApp::ShowHelp() const {
 }  // namespace controller::cli
 
 namespace controller::cli {
-TaskApp::TaskApp(todo::TaskRepo& repo, const controller::TaskRenderer& ren)
-    : repo(repo), renderer(ren) {}
+TaskApp::TaskApp(Session& session, todo::TaskRepo& repo,
+                 const controller::TaskRenderer& ren)
+    : session(session), repo(repo), renderer(ren) {}
 
 void TaskApp::Run(const std::vector<std::string>& args) const {
   auto cmd = Parser().Parse(args);
 
   if (cmd.Name() == "create") {
-    auto userID = std::string("test_user_id"), name = cmd.Flag("name");
+    auto [userID, found] = session.GetAuthenticatedUserID();
+    if (!found) {
+      renderer.ShowErr("You need to be authenticated to create a task");
+      return;
+    }
+
+    auto name = cmd.Flag("name");
     Create(userID, name);
     return;
   }

@@ -98,7 +98,8 @@ class UserApp {
 namespace controller::cli {
 class TaskApp {
  public:
-  TaskApp(todo::TaskRepo& repo, const controller::TaskRenderer& ren);
+  TaskApp(Session& session, todo::TaskRepo& repo,
+          const controller::TaskRenderer& ren);
 
   void Run(const std::vector<std::string>& args) const;
 
@@ -107,6 +108,7 @@ class TaskApp {
 
   void ShowHelp() const;
 
+  Session& session;
   todo::TaskRepo& repo;
   const controller::TaskRenderer& renderer;
 };
