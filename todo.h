@@ -75,6 +75,7 @@ class TaskRepo {
  public:
   virtual ~TaskRepo() {}
   virtual std::string NextID() = 0;
+  virtual std::vector<Task> Get(const std::string& userID) = 0;
   virtual void Save(const Task&) = 0;
 };
 }  // namespace todo
