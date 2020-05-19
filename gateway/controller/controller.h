@@ -21,4 +21,12 @@ class UserRenderer : public Renderer {
 };
 }  // namespace controller
 
+namespace controller {
+class TaskRenderer : public Renderer {
+ public:
+  virtual ~TaskRenderer() {}
+  virtual void Show(const todo::Task& task) const = 0;
+};
+}  // namespace controller
+
 #endif
