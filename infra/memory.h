@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include <tuple>
 
 #include "infra/rand.h"
 #include "todo.h"
@@ -15,6 +16,8 @@ class UserRepo : public todo::UserRepo {
   explicit UserRepo(std::map<std::string, todo::User>&& users);
 
   std::string NextID();
+
+  std::tuple<todo::User, bool> FindByEmail(const std::string& email);
 
   void Save(const todo::User&);
 

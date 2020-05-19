@@ -2,6 +2,7 @@
 #define TOMOCY_CPP_TODO_TODO_H
 
 #include <string>
+#include <tuple>
 
 namespace todo {
 class User {
@@ -27,6 +28,7 @@ class UserRepo {
  public:
   virtual ~UserRepo() {}
   virtual std::string NextID() = 0;
+  virtual std::tuple<User, bool> FindByEmail(const std::string& email) = 0;
   virtual void Save(const User&) = 0;
 };
 }  // namespace todo
