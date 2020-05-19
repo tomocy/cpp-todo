@@ -30,12 +30,12 @@ class User {
 
   const std::string& Email() const;
 
-  const std::string& Password() const;
+  const Hash& Password() const;
 
  private:
   std::string id;
   std::string email;
-  std::string password;
+  Hash password;
 };
 }  // namespace todo
 

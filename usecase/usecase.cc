@@ -29,7 +29,7 @@ std::tuple<todo::User, bool> AuthenticateUser::Do(const std::string& email,
     return {todo::User(), false};
   }
 
-  if (user.Password() != password) {
+  if (!user.Password().Compare(password)) {
     return {todo::User(), false};
   }
 

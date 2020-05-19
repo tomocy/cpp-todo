@@ -15,11 +15,11 @@ bool Hash::Compare(const std::string& plain) const {
 namespace todo {
 User::User(const std::string& id, const std::string& email,
            const std::string& password)
-    : id(id), email(email), password(password) {}
+    : id(id), email(email), password(Hash(password)) {}
 
 const std::string& User::ID() const { return id; }
 
 const std::string& User::Email() const { return email; }
 
-const std::string& User::Password() const { return password; }
+const Hash& User::Password() const { return password; }
 }  // namespace todo
