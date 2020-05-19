@@ -104,6 +104,8 @@ class TaskApp {
   void Run(const std::vector<std::string>& args) const;
 
  private:
+  void Get(const std::string& userID) const;
+
   void Create(const std::string& userID, const std::string& name) const;
 
   void ShowHelp() const;

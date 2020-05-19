@@ -180,6 +180,17 @@ TaskApp::TaskApp(Session& session, todo::TaskRepo& repo,
 void TaskApp::Run(const std::vector<std::string>& args) const {
   auto cmd = Parser().Parse(args);
 
+  if (cmd.Name() == "get") {
+    auto [userID, found] = session.GetAuthenticatedUserID();
+    if (!found) {
+      renderer.ShowErr("You need to be authenticated to get tasks");
+      return;
+    }
+
+    Get(userID);
+    return;
+  }
+
   if (cmd.Name() == "create") {
     auto [userID, found] = session.GetAuthenticatedUserID();
     if (!found) {
@@ -193,6 +204,15 @@ void TaskApp::Run(const std::vector<std::string>& args) const {
   }
 
   ShowHelp();
+}
+
+void TaskApp::Get(const std::string& userID) const {
+  auto get = usecase::GetTasks(repo);
+  auto tasks = get.Do(userID);
+
+  for (auto task : tasks) {
+    renderer.Show(task);
+  }
 }
 
 void TaskApp::Create(const std::string& userID, const std::string& name) const {
