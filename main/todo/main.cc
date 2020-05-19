@@ -10,8 +10,12 @@ int main(int n, const char* const* const args) {
       {"test user 1",
        todo::User("test user 1", "test_user_1@example.com", "test user 1")},
   });
-  const auto ren = presenter::text::UserRenderer();
-  auto app = controller::cli::App(userRepo, ren);
+  const auto userRen = presenter::text::UserRenderer();
+
+  auto taskRepo = infra::memory::TaskRepo();
+  const auto taskRen = presenter::text::TaskRenderer();
+
+  auto app = controller::cli::App(userRepo, taskRepo, userRen, taskRen);
   app.Run(n, args);
 
   return EXIT_SUCCESS;
