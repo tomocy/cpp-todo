@@ -12,6 +12,10 @@ void UserRenderer::Show(const todo::User& user) const {
   std::cout << "Email: " << user.Email() << std::endl;
 }
 
+void UserRenderer::ShowMessage(const std::string& msg) const {
+  std::cout << msg << std::endl;
+}
+
 void UserRenderer::ShowErr(const std::string& msg) const {
   std::cerr << msg << std::endl;
 }
@@ -29,6 +33,10 @@ void TaskRenderer::Show(const todo::Task& task) const {
   std::cout << "ID: " << task.ID() << std::endl;
   std::cout << "User ID: " << task.UserID() << std::endl;
   std::cout << "Name: " << task.Name() << std::endl;
+}
+
+void TaskRenderer::ShowMessage(const std::string& msg) const {
+  std::cout << msg << std::endl;
 }
 
 void TaskRenderer::ShowErr(const std::string& msg) const {
