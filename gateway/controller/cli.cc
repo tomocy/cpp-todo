@@ -234,6 +234,7 @@ void TaskApp::Create(const std::string& userID, const std::string& name) const {
 
 void TaskApp::Delete(const std::string& id) const {
   usecase::DeleteTask(repo).Do(id);
+  renderer.ShowMessage("The task is successfully delete.");
 }
 
 void TaskApp::ShowHelp() const {
