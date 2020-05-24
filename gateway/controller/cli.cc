@@ -141,8 +141,7 @@ void UserApp::Run(const std::vector<std::string>& args) const {
 
 void UserApp::Create(const std::string& email,
                      const std::string& password) const {
-  auto create = usecase::CreateUser(repo);
-  auto user = create.Do(email, password);
+  auto user = usecase::CreateUser(repo).Do(email, password);
 
   session.SetAuthenticatedUserID(user.ID());
 
@@ -151,8 +150,7 @@ void UserApp::Create(const std::string& email,
 
 void UserApp::Authenticate(const std::string& email,
                            const std::string& password) const {
-  auto authenticate = usecase::AuthenticateUser(repo);
-  auto [user, ok] = authenticate.Do(email, password);
+  auto [user, ok] = usecase::AuthenticateUser(repo).Do(email, password);
   if (!ok) {
     renderer.ShowErr("invalid credentials");
     return;
@@ -219,15 +217,13 @@ void TaskApp::Run(const std::vector<std::string>& args) const {
 }
 
 void TaskApp::Get(const std::string& userID) const {
-  auto get = usecase::GetTasks(repo);
-  auto tasks = get.Do(userID);
+  auto tasks = usecase::GetTasks(repo).Do(userID);
 
   renderer.Show(tasks);
 }
 
 void TaskApp::Create(const std::string& userID, const std::string& name) const {
-  auto create = usecase::CreateTask(repo);
-  auto task = create.Do(userID, name);
+  auto task = usecase::CreateTask(repo).Do(userID, name);
 
   renderer.Show(task);
 }
