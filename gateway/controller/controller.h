@@ -10,6 +10,7 @@ namespace controller {
 class Renderer {
  public:
   virtual ~Renderer() {}
+  virtual void ShowMessage(const std::string& msg) const = 0;
   virtual void ShowErr(const std::string& msg) const = 0;
 };
 }  // namespace controller
