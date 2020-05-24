@@ -203,6 +203,18 @@ void TaskApp::Run(const std::vector<std::string>& args) const {
     return;
   }
 
+  if (cmd.Name() == "delete") {
+    auto [userID, found] = session.GetAuthenticatedUserID();
+    if (!found) {
+      renderer.ShowErr("You need to be authenticated to delete a task");
+      return;
+    }
+
+    auto id = cmd.Flag("id");
+    Delete(id);
+    return;
+  }
+
   ShowHelp();
 }
 
@@ -220,10 +232,15 @@ void TaskApp::Create(const std::string& userID, const std::string& name) const {
   renderer.Show(task);
 }
 
+void TaskApp::Delete(const std::string& id) const {
+  usecase::DeleteTask(repo).Do(id);
+}
+
 void TaskApp::ShowHelp() const {
   std::cout << "task" << std::endl;
   std::cout << "Usage:  [command] args..." << std::endl;
   std::cout << "Commands:" << std::endl;
   std::cout << "  create" << std::endl;
+  std::cout << "  delete" << std::endl;
 }
 }  // namespace controller::cli
