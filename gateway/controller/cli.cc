@@ -240,6 +240,7 @@ void TaskApp::ShowHelp() const {
   std::cout << "task" << std::endl;
   std::cout << "Usage:  [command] args..." << std::endl;
   std::cout << "Commands:" << std::endl;
+  std::cout << "  get" << std::endl;
   std::cout << "  create" << std::endl;
   std::cout << "  delete" << std::endl;
 }
