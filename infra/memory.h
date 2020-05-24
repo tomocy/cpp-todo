@@ -58,6 +58,8 @@ class TaskRepo : public todo::TaskRepo {
 
   std::vector<todo::Task> Get(const std::string& userID) override;
 
+  std::tuple<todo::Task, bool> Find(const std::string& id) override;
+
   void Save(const todo::Task& task) override;
 
   void Delete(const todo::Task& task) override;

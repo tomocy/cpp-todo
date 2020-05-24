@@ -66,6 +66,14 @@ std::vector<todo::Task> TaskRepo::Get(const std::string& userID) {
   return tasks;
 }
 
+std::tuple<todo::Task, bool> TaskRepo::Find(const std::string& id) {
+  if (tasks.find(id) == tasks.end()) {
+    return {todo::Task(), false};
+  }
+
+  return {tasks.at(id), true};
+}
+
 void TaskRepo::Save(const todo::Task& task) { tasks[task.ID()] = task; }
 
 void TaskRepo::Delete(const todo::Task& task) { tasks.erase(task.ID()); }
