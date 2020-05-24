@@ -55,4 +55,16 @@ class CreateTask {
 };
 }  // namespace usecase
 
+namespace usecase {
+class DeleteTask {
+ public:
+  DeleteTask(todo::TaskRepo& repo);
+
+  void Do(const std::string& id);
+
+ private:
+  todo::TaskRepo& repo;
+};
+}  // namespace usecase
+
 #endif
