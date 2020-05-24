@@ -60,6 +60,8 @@ class TaskRepo : public todo::TaskRepo {
 
   void Save(const todo::Task& task) override;
 
+  void Delete(const todo::Task& task) override;
+
   const std::map<std::string, todo::Task>& Tasks();
 
  private:

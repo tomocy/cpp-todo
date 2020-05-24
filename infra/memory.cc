@@ -67,4 +67,6 @@ std::vector<todo::Task> TaskRepo::Get(const std::string& userID) {
 }
 
 void TaskRepo::Save(const todo::Task& task) { tasks[task.ID()] = task; }
+
+void TaskRepo::Delete(const todo::Task& task) { tasks.erase(task.ID()); }
 }  // namespace infra::memory
