@@ -33,6 +33,9 @@ void TaskRenderer::Show(const todo::Task& task) const {
   std::cout << "ID: " << task.ID() << std::endl;
   std::cout << "User ID: " << task.UserID() << std::endl;
   std::cout << "Name: " << task.Name() << std::endl;
+  std::cout << "Status: "
+            << (task.IsCompleted() ? "Completed" : "Not Completed")
+            << std::endl;
 }
 
 void TaskRenderer::ShowMessage(const std::string& msg) const {
