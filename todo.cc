@@ -15,14 +15,41 @@ bool Hash::Compare(const std::string& plain) const {
 
 namespace todo {
 User::User(const std::string& id, const std::string& email,
-           const std::string& password) noexcept
-    : id(id), email(email), password(Hash(password)) {}
+           const std::string& password) {
+  setID(id);
+  setEmail(email);
+  setPassword(password);
+}
 
 const std::string& User::ID() const { return id; }
 
 const std::string& User::Email() const { return email; }
 
 const Hash& User::Password() const { return password; }
+
+void User::setID(const std::string& id) {
+  if (id.empty()) {
+    throw Exception("id should not be empty");
+  }
+
+  this->id = id;
+}
+
+void User::setEmail(const std::string& email) {
+  if (email.empty()) {
+    throw Exception("email should not be empty");
+  }
+
+  this->email = email;
+}
+
+void User::setPassword(const std::string& password) {
+  if (password.empty()) {
+    throw Exception("password should not be empty");
+  }
+
+  this->password = Hash(password);
+}
 }  // namespace todo
 
 namespace todo {

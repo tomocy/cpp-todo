@@ -24,7 +24,7 @@ class User {
   User() = default;
 
   User(const std::string& id, const std::string& email,
-       const std::string& password) noexcept;
+       const std::string& password);
 
   const std::string& ID() const;
 
@@ -33,6 +33,12 @@ class User {
   const Hash& Password() const;
 
  private:
+  void setID(const std::string& id);
+
+  void setEmail(const std::string& email);
+
+  void setPassword(const std::string& password);
+
   std::string id;
   std::string email;
   Hash password;
