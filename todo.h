@@ -81,7 +81,8 @@ class TaskRepo {
   virtual ~TaskRepo() {}
   virtual std::string NextID() = 0;
   virtual std::vector<Task> Get(const std::string& userID) = 0;
-  virtual std::tuple<todo::Task, bool> Find(const std::string& id) = 0;
+  virtual std::tuple<todo::Task, bool> FindOfUser(
+      const std::string& id, const std::string& userID) = 0;
   virtual void Save(const Task&) = 0;
   virtual void Delete(const Task&) = 0;
 };
