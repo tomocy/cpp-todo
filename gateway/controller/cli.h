@@ -108,6 +108,8 @@ class TaskApp {
 
   void Create(const std::string& userID, const std::string& name) const;
 
+  void Complete(const std::string& id, const std::string& userID) const;
+
   void Delete(const std::string& id, const std::string& userID) const;
 
   void ShowHelp() const;

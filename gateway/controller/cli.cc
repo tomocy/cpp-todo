@@ -201,6 +201,18 @@ void TaskApp::Run(const std::vector<std::string>& args) const {
     return;
   }
 
+  if (cmd.Name() == "complete") {
+    auto [userID, found] = session.GetAuthenticatedUserID();
+    if (!found) {
+      renderer.ShowErr("You need to be authenticated to create a task");
+      return;
+    }
+
+    auto id = cmd.Flag("id");
+    Complete(id, userID);
+    return;
+  }
+
   if (cmd.Name() == "delete") {
     auto [userID, found] = session.GetAuthenticatedUserID();
     if (!found) {
@@ -228,6 +240,13 @@ void TaskApp::Create(const std::string& userID, const std::string& name) const {
   renderer.Show(task);
 }
 
+void TaskApp::Complete(const std::string& id, const std::string& userID) const {
+  auto task = usecase::CompleteTask(repo).Do(id, userID);
+
+  renderer.ShowMessage("The task is successfully completed.");
+  renderer.Show(task);
+}
+
 void TaskApp::Delete(const std::string& id, const std::string& userID) const {
   usecase::DeleteTask(repo).Do(id, userID);
   renderer.ShowMessage("The task is successfully delete.");
@@ -239,6 +258,7 @@ void TaskApp::ShowHelp() const {
   std::cout << "Commands:" << std::endl;
   std::cout << "  get" << std::endl;
   std::cout << "  create" << std::endl;
+  std::cout << "  complete" << std::endl;
   std::cout << "  delete" << std::endl;
 }
 }  // namespace controller::cli
