@@ -72,7 +72,7 @@ class DeleteTask {
  public:
   DeleteTask(todo::TaskRepo& repo);
 
-  void Do(const std::string& id);
+  void Do(const std::string& id, const std::string& userID);
 
  private:
   todo::TaskRepo& repo;

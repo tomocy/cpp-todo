@@ -62,8 +62,8 @@ todo::Task CreateTask::Do(const std::string& userID, const std::string& name) {
 namespace usecase {
 CompleteTask::CompleteTask(todo::TaskRepo& repo) : repo(repo) {}
 
-todo::Task CompleteTask::Do(const std::string& id, const std::string& _) {
-  auto [task, found] = repo.Find(id);
+todo::Task CompleteTask::Do(const std::string& id, const std::string& userID) {
+  auto [task, found] = repo.FindOfUser(id, userID);
   if (!found) {
     return todo::Task();
   }
@@ -79,8 +79,8 @@ todo::Task CompleteTask::Do(const std::string& id, const std::string& _) {
 namespace usecase {
 DeleteTask::DeleteTask(todo::TaskRepo& repo) : repo(repo) {}
 
-void DeleteTask::Do(const std::string& id) {
-  auto [task, found] = repo.Find(id);
+void DeleteTask::Do(const std::string& id, const std::string& userID) {
+  auto [task, found] = repo.FindOfUser(id, userID);
   if (!found) {
     return;
   }
