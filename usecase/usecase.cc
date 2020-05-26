@@ -63,11 +63,10 @@ todo::Task CreateTask::Do(const std::string& userID, const std::string& name) {
 namespace usecase {
 CompleteTask::CompleteTask(todo::TaskRepo& repo) noexcept : repo(repo) {}
 
-todo::Task CompleteTask::Do(const std::string& id,
-                            const std::string& userID) noexcept {
+todo::Task CompleteTask::Do(const std::string& id, const std::string& userID) {
   auto [task, found] = repo.FindOfUser(id, userID);
   if (!found) {
-    return todo::Task();
+    throw todo::Exception("no such task");
   }
 
   task.Complete();
@@ -81,10 +80,10 @@ todo::Task CompleteTask::Do(const std::string& id,
 namespace usecase {
 DeleteTask::DeleteTask(todo::TaskRepo& repo) noexcept : repo(repo) {}
 
-void DeleteTask::Do(const std::string& id, const std::string& userID) noexcept {
+void DeleteTask::Do(const std::string& id, const std::string& userID) {
   auto [task, found] = repo.FindOfUser(id, userID);
   if (!found) {
-    return;
+    throw todo::Exception("no such task");
   }
 
   repo.Delete(task);

@@ -60,7 +60,7 @@ class CompleteTask {
  public:
   CompleteTask(todo::TaskRepo& repo) noexcept;
 
-  todo::Task Do(const std::string& id, const std::string& userID) noexcept;
+  todo::Task Do(const std::string& id, const std::string& userID);
 
  private:
   todo::TaskRepo& repo;
@@ -72,7 +72,7 @@ class DeleteTask {
  public:
   DeleteTask(todo::TaskRepo& repo) noexcept;
 
-  void Do(const std::string& id, const std::string& userID) noexcept;
+  void Do(const std::string& id, const std::string& userID);
 
  private:
   todo::TaskRepo& repo;
