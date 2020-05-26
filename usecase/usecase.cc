@@ -10,7 +10,7 @@ namespace usecase {
 CreateUser::CreateUser(todo::UserRepo& repo) noexcept : repo(repo) {}
 
 todo::User CreateUser::Do(const std::string& email,
-                          const std::string& password) noexcept {
+                          const std::string& password) {
   auto id = repo.NextID();
   auto user = todo::User(id, email, password);
 
@@ -50,8 +50,7 @@ std::vector<todo::Task> GetTasks::Do(const std::string& userID) const noexcept {
 namespace usecase {
 CreateTask::CreateTask(todo::TaskRepo& repo) noexcept : repo(repo) {}
 
-todo::Task CreateTask::Do(const std::string& userID,
-                          const std::string& name) noexcept {
+todo::Task CreateTask::Do(const std::string& userID, const std::string& name) {
   auto id = repo.NextID();
   auto task = todo::Task(id, userID, name);
 

@@ -11,7 +11,7 @@ class CreateUser {
  public:
   CreateUser(todo::UserRepo& repo) noexcept;
 
-  todo::User Do(const std::string& email, const std::string& password) noexcept;
+  todo::User Do(const std::string& email, const std::string& password);
 
  private:
   todo::UserRepo& repo;
@@ -48,7 +48,7 @@ class CreateTask {
  public:
   CreateTask(todo::TaskRepo& repo) noexcept;
 
-  todo::Task Do(const std::string& userID, const std::string& name) noexcept;
+  todo::Task Do(const std::string& userID, const std::string& name);
 
  private:
   todo::TaskRepo& repo;
