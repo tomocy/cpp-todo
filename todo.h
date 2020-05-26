@@ -62,7 +62,7 @@ class Task {
   Task() = default;
 
   Task(const std::string& id, const std::string& userID,
-       const std::string& name) noexcept;
+       const std::string& name);
 
   const std::string& ID() const;
 
@@ -75,6 +75,12 @@ class Task {
   void Complete();
 
  private:
+  void setID(const std::string& id);
+
+  void setUserID(const std::string& userID);
+
+  void setName(const std::string& name);
+
   std::string id;
   std::string userID;
   std::string name;

@@ -54,8 +54,11 @@ void User::setPassword(const std::string& password) {
 
 namespace todo {
 Task::Task(const std::string& id, const std::string& userID,
-           const std::string& name) noexcept
-    : id(id), userID(userID), name(name) {}
+           const std::string& name) {
+  setID(id);
+  setUserID(userID);
+  setName(name);
+}
 
 const std::string& Task::ID() const { return id; }
 
@@ -66,6 +69,30 @@ const std::string& Task::Name() const { return name; }
 bool Task::IsCompleted() const { return completed; }
 
 void Task::Complete() { completed = true; }
+
+void Task::setID(const std::string& id) {
+  if (id.empty()) {
+    throw Exception("id should not be empty");
+  }
+
+  this->id = id;
+}
+
+void Task::setUserID(const std::string& userID) {
+  if (userID.empty()) {
+    throw Exception("user id should not be empty");
+  }
+
+  this->userID = userID;
+}
+
+void Task::setName(const std::string& name) {
+  if (name.empty()) {
+    throw Exception("name should not be empty");
+  }
+
+  this->name = name;
+}
 }  // namespace todo
 
 namespace todo {
