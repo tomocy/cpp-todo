@@ -35,12 +35,12 @@ class UserRepo : public todo::UserRepo {
 
   explicit UserRepo(std::map<std::string, todo::User>&& users) noexcept;
 
-  std::string NextID() const noexcept;
+  std::string NextID() const noexcept override;
 
   std::tuple<todo::User, bool> FindByEmail(const std::string& email) const
-      noexcept;
+      noexcept override;
 
-  void Save(const todo::User&) noexcept;
+  void Save(const todo::User&) noexcept override;
 
   const std::map<std::string, todo::User>& Users() const noexcept;
 

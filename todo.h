@@ -49,10 +49,10 @@ namespace todo {
 class UserRepo {
  public:
   virtual ~UserRepo() {}
-  virtual std::string NextID() const noexcept = 0;
-  virtual std::tuple<User, bool> FindByEmail(const std::string& email) const
-      noexcept = 0;
-  virtual void Save(const User&) noexcept = 0;
+  virtual std::string NextID() const = 0;
+  virtual std::tuple<User, bool> FindByEmail(
+      const std::string& email) const = 0;
+  virtual void Save(const User&) = 0;
 };
 }  // namespace todo
 
@@ -92,12 +92,12 @@ namespace todo {
 class TaskRepo {
  public:
   virtual ~TaskRepo() {}
-  virtual std::string NextID() const noexcept = 0;
-  virtual std::vector<Task> Get(const std::string& userID) const noexcept = 0;
+  virtual std::string NextID() const = 0;
+  virtual std::vector<Task> Get(const std::string& userID) const = 0;
   virtual std::tuple<todo::Task, bool> FindOfUser(
-      const std::string& id, const std::string& userID) const noexcept = 0;
-  virtual void Save(const Task&) noexcept = 0;
-  virtual void Delete(const Task&) noexcept = 0;
+      const std::string& id, const std::string& userID) const = 0;
+  virtual void Save(const Task&) = 0;
+  virtual void Delete(const Task&) = 0;
 };
 }  // namespace todo
 

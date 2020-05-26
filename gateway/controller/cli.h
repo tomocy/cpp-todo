@@ -48,9 +48,8 @@ namespace controller::cli {
 class Session {
  public:
   virtual ~Session() {}
-  virtual void SetAuthenticatedUserID(const std::string& id) noexcept = 0;
-  virtual std::tuple<std::string, bool> GetAuthenticatedUserID() const
-      noexcept = 0;
+  virtual void SetAuthenticatedUserID(const std::string& id) = 0;
+  virtual std::tuple<std::string, bool> GetAuthenticatedUserID() const = 0;
 };
 }  // namespace controller::cli
 
