@@ -9,9 +9,9 @@
 namespace usecase {
 class CreateUser {
  public:
-  CreateUser(todo::UserRepo& repo);
+  CreateUser(todo::UserRepo& repo) noexcept;
 
-  todo::User Do(const std::string& email, const std::string& password);
+  todo::User Do(const std::string& email, const std::string& password) noexcept;
 
  private:
   todo::UserRepo& repo;
@@ -21,34 +21,34 @@ class CreateUser {
 namespace usecase {
 class AuthenticateUser {
  public:
-  AuthenticateUser(todo::UserRepo& repo);
+  AuthenticateUser(const todo::UserRepo& repo) noexcept;
 
   std::tuple<todo::User, bool> Do(const std::string& email,
-                                  const std::string& password);
+                                  const std::string& password) const noexcept;
 
  private:
-  todo::UserRepo& repo;
+  const todo::UserRepo& repo;
 };
 }  // namespace usecase
 
 namespace usecase {
 class GetTasks {
  public:
-  GetTasks(todo::TaskRepo& repo);
+  GetTasks(const todo::TaskRepo& repo) noexcept;
 
-  std::vector<todo::Task> Do(const std::string& userID);
+  std::vector<todo::Task> Do(const std::string& userID) const noexcept;
 
  private:
-  todo::TaskRepo& repo;
+  const todo::TaskRepo& repo;
 };
 }  // namespace usecase
 
 namespace usecase {
 class CreateTask {
  public:
-  CreateTask(todo::TaskRepo& repo);
+  CreateTask(todo::TaskRepo& repo) noexcept;
 
-  todo::Task Do(const std::string& userID, const std::string& name);
+  todo::Task Do(const std::string& userID, const std::string& name) noexcept;
 
  private:
   todo::TaskRepo& repo;
@@ -58,9 +58,9 @@ class CreateTask {
 namespace usecase {
 class CompleteTask {
  public:
-  CompleteTask(todo::TaskRepo& repo);
+  CompleteTask(todo::TaskRepo& repo) noexcept;
 
-  todo::Task Do(const std::string& id, const std::string& userID);
+  todo::Task Do(const std::string& id, const std::string& userID) noexcept;
 
  private:
   todo::TaskRepo& repo;
@@ -70,9 +70,9 @@ class CompleteTask {
 namespace usecase {
 class DeleteTask {
  public:
-  DeleteTask(todo::TaskRepo& repo);
+  DeleteTask(todo::TaskRepo& repo) noexcept;
 
-  void Do(const std::string& id, const std::string& userID);
+  void Do(const std::string& id, const std::string& userID) noexcept;
 
  private:
   todo::TaskRepo& repo;

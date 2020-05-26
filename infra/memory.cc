@@ -9,14 +9,14 @@
 #include "todo.h"
 
 namespace infra::memory {
-Session::Session(std::map<std::string, std::string>&& data)
+Session::Session(std::map<std::string, std::string>&& data) noexcept
     : data(std::move(data)) {}
 
-void Session::SetAuthenticatedUserID(const std::string& id) {
+void Session::SetAuthenticatedUserID(const std::string& id) noexcept {
   data[kAuthenticatedUserID] = id;
 }
 
-std::tuple<std::string, bool> Session::GetAuthenticatedUserID() {
+std::tuple<std::string, bool> Session::GetAuthenticatedUserID() const noexcept {
   if (data.find(kAuthenticatedUserID) == data.end()) {
     return {"", false};
   }
@@ -26,12 +26,15 @@ std::tuple<std::string, bool> Session::GetAuthenticatedUserID() {
 }  // namespace infra::memory
 
 namespace infra::memory {
-UserRepo::UserRepo(std::map<std::string, todo::User>&& users)
+UserRepo::UserRepo(std::map<std::string, todo::User>&& users) noexcept
     : users(std::move(users)) {}
 
-std::string UserRepo::NextID() { return infra::rand::Generate(30); }
+std::string UserRepo::NextID() const noexcept {
+  return infra::rand::Generate(30);
+}
 
-std::tuple<todo::User, bool> UserRepo::FindByEmail(const std::string& email) {
+std::tuple<todo::User, bool> UserRepo::FindByEmail(
+    const std::string& email) const noexcept {
   for (const auto [id, user] : users) {
     if (user.Email() == email) {
       return {user, true};
@@ -41,18 +44,25 @@ std::tuple<todo::User, bool> UserRepo::FindByEmail(const std::string& email) {
   return {todo::User(), false};
 }
 
-void UserRepo::Save(const todo::User& user) { users[user.ID()] = user; }
+void UserRepo::Save(const todo::User& user) noexcept {
+  users[user.ID()] = user;
+}
 
-const std::map<std::string, todo::User>& UserRepo::Users() { return users; }
+const std::map<std::string, todo::User>& UserRepo::Users() const noexcept {
+  return users;
+}
 }  // namespace infra::memory
 
 namespace infra::memory {
-TaskRepo::TaskRepo(std::map<std::string, todo::Task>&& tasks)
+TaskRepo::TaskRepo(std::map<std::string, todo::Task>&& tasks) noexcept
     : tasks(std::move(tasks)) {}
 
-std::string TaskRepo::NextID() { return infra::rand::Generate(50); }
+std::string TaskRepo::NextID() const noexcept {
+  return infra::rand::Generate(50);
+}
 
-std::vector<todo::Task> TaskRepo::Get(const std::string& userID) {
+std::vector<todo::Task> TaskRepo::Get(const std::string& userID) const
+    noexcept {
   auto tasks = std::vector<todo::Task>();
 
   for (auto [_, task] : this->tasks) {
@@ -66,8 +76,8 @@ std::vector<todo::Task> TaskRepo::Get(const std::string& userID) {
   return tasks;
 }
 
-std::tuple<todo::Task, bool> TaskRepo::FindOfUser(const std::string& id,
-                                                  const std::string& userID) {
+std::tuple<todo::Task, bool> TaskRepo::FindOfUser(
+    const std::string& id, const std::string& userID) const noexcept {
   if (tasks.find(id) == tasks.end()) {
     return {todo::Task(), false};
   }
@@ -78,7 +88,11 @@ std::tuple<todo::Task, bool> TaskRepo::FindOfUser(const std::string& id,
   return {tasks.at(id), true};
 }
 
-void TaskRepo::Save(const todo::Task& task) { tasks[task.ID()] = task; }
+void TaskRepo::Save(const todo::Task& task) noexcept {
+  tasks[task.ID()] = task;
+}
 
-void TaskRepo::Delete(const todo::Task& task) { tasks.erase(task.ID()); }
+void TaskRepo::Delete(const todo::Task& task) noexcept {
+  tasks.erase(task.ID());
+}
 }  // namespace infra::memory

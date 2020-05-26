@@ -11,7 +11,7 @@ std::random_device seed;
 std::seed_seq seeds = {seed(), seed()};
 std::default_random_engine gen(seeds);
 
-std::string Generate(int n) {
+std::string Generate(int n) noexcept {
   std::uniform_int_distribution<int> range(0, letters.size() - 1);
 
   auto s = std::string(n, ' ');

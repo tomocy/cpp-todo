@@ -15,15 +15,15 @@ class Command {
  public:
   Command(const std::string& name,
           const std::map<std::string, std::string>& flags,
-          const std::vector<std::string>& args);
+          const std::vector<std::string>& args) noexcept;
 
-  const std::string& Name() const;
+  const std::string& Name() const noexcept;
 
-  const std::map<std::string, std::string> Flags() const;
+  const std::map<std::string, std::string> Flags() const noexcept;
 
-  const std::string Flag(const std::string& name) const;
+  const std::string Flag(const std::string& name) const noexcept;
 
-  const std::vector<std::string>& Args() const;
+  const std::vector<std::string>& Args() const noexcept;
 
  private:
   std::string name;
@@ -35,12 +35,12 @@ class Command {
 namespace controller::cli {
 class Parser {
  public:
-  Command Parse(const std::vector<std::string>& args) const;
+  Command Parse(const std::vector<std::string>& args) const noexcept;
 
  private:
-  bool IsFlag(const std::string& s) const;
+  bool IsFlag(const std::string& s) const noexcept;
 
-  std::string TrimFlagHyphen(const std::string& s) const;
+  std::string TrimFlagHyphen(const std::string& s) const noexcept;
 };
 }  // namespace controller::cli
 
@@ -48,8 +48,9 @@ namespace controller::cli {
 class Session {
  public:
   virtual ~Session() {}
-  virtual void SetAuthenticatedUserID(const std::string& id) = 0;
-  virtual std::tuple<std::string, bool> GetAuthenticatedUserID() = 0;
+  virtual void SetAuthenticatedUserID(const std::string& id) noexcept = 0;
+  virtual std::tuple<std::string, bool> GetAuthenticatedUserID() const
+      noexcept = 0;
 };
 }  // namespace controller::cli
 
@@ -58,12 +59,12 @@ class App {
  public:
   App(Session& session, todo::UserRepo& userRepo, todo::TaskRepo& taskRepo,
       const controller::UserRenderer& userRen,
-      const controller::TaskRenderer& taskRen);
+      const controller::TaskRenderer& taskRen) noexcept;
 
-  void Run(int n, const char* const* args) const;
+  void Run(int n, const char* const* args) const noexcept;
 
  private:
-  void ShowHelp() const;
+  void ShowHelp() const noexcept;
 
   Session& session;
   todo::UserRepo& userRepo;
@@ -77,17 +78,18 @@ namespace controller::cli {
 class UserApp {
  public:
   UserApp(Session& session, todo::UserRepo& repo,
-          const controller::UserRenderer& ren);
+          const controller::UserRenderer& ren) noexcept;
 
-  void Run(const std::vector<std::string>& args) const;
+  void Run(const std::vector<std::string>& args) const noexcept;
 
  private:
-  void Create(const std::string& email, const std::string& password) const;
+  void Create(const std::string& email, const std::string& password) const
+      noexcept;
 
-  void Authenticate(const std::string& email,
-                    const std::string& password) const;
+  void Authenticate(const std::string& email, const std::string& password) const
+      noexcept;
 
-  void ShowHelp() const;
+  void ShowHelp() const noexcept;
 
   Session& session;
   todo::UserRepo& repo;
@@ -99,20 +101,22 @@ namespace controller::cli {
 class TaskApp {
  public:
   TaskApp(Session& session, todo::TaskRepo& repo,
-          const controller::TaskRenderer& ren);
+          const controller::TaskRenderer& ren) noexcept;
 
-  void Run(const std::vector<std::string>& args) const;
+  void Run(const std::vector<std::string>& args) const noexcept;
 
  private:
-  void Get(const std::string& userID) const;
+  void Get(const std::string& userID) const noexcept;
 
-  void Create(const std::string& userID, const std::string& name) const;
+  void Create(const std::string& userID, const std::string& name) const
+      noexcept;
 
-  void Complete(const std::string& id, const std::string& userID) const;
+  void Complete(const std::string& id, const std::string& userID) const
+      noexcept;
 
-  void Delete(const std::string& id, const std::string& userID) const;
+  void Delete(const std::string& id, const std::string& userID) const noexcept;
 
-  void ShowHelp() const;
+  void ShowHelp() const noexcept;
 
   Session& session;
   todo::TaskRepo& repo;

@@ -4,7 +4,7 @@
 #include <string>
 
 namespace infra::rand {
-std::string Generate(int);
+std::string Generate(int) noexcept;
 }  // namespace infra::rand
 
 #endif

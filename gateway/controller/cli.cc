@@ -13,16 +13,16 @@
 namespace controller::cli {
 Command::Command(const std::string& name,
                  const std::map<std::string, std::string>& flags,
-                 const std::vector<std::string>& args)
+                 const std::vector<std::string>& args) noexcept
     : name(name), flags(flags), args(args) {}
 
-const std::string& Command::Name() const { return name; }
+const std::string& Command::Name() const noexcept { return name; }
 
-const std::map<std::string, std::string> Command::Flags() const {
+const std::map<std::string, std::string> Command::Flags() const noexcept {
   return flags;
 }
 
-const std::string Command::Flag(const std::string& name) const {
+const std::string Command::Flag(const std::string& name) const noexcept {
   if (flags.find(name) == flags.end()) {
     return "";
   }
@@ -30,11 +30,11 @@ const std::string Command::Flag(const std::string& name) const {
   return flags.at(name);
 }
 
-const std::vector<std::string>& Command::Args() const { return args; }
+const std::vector<std::string>& Command::Args() const noexcept { return args; }
 }  // namespace controller::cli
 
 namespace controller::cli {
-Command Parser::Parse(const std::vector<std::string>& args) const {
+Command Parser::Parse(const std::vector<std::string>& args) const noexcept {
   if (args.size() < 1) {
     return Command("", std::map<std::string, std::string>(), args);
   }
@@ -65,12 +65,12 @@ Command Parser::Parse(const std::vector<std::string>& args) const {
   return Command(args.at(0), flags, rest_args);
 }
 
-bool Parser::IsFlag(const std::string& s) const {
+bool Parser::IsFlag(const std::string& s) const noexcept {
   auto i = s.find("-");
   return i != std::string::npos && i == 0;
 }
 
-std::string Parser::TrimFlagHyphen(const std::string& s) const {
+std::string Parser::TrimFlagHyphen(const std::string& s) const noexcept {
   auto i = s.find_first_not_of("-");
   if (i == std::string::npos) {
     return s;
@@ -83,14 +83,14 @@ std::string Parser::TrimFlagHyphen(const std::string& s) const {
 namespace controller::cli {
 App::App(Session& session, todo::UserRepo& userRepo, todo::TaskRepo& taskRepo,
          const controller::UserRenderer& userRen,
-         const controller::TaskRenderer& taskRen)
+         const controller::TaskRenderer& taskRen) noexcept
     : session(session),
       userRepo(userRepo),
       taskRepo(taskRepo),
       userRenderer(userRen),
       taskRenderer(taskRen) {}
 
-void App::Run(int n, const char* const* const args) const {
+void App::Run(int n, const char* const* const args) const noexcept {
   auto converted = std::vector<std::string>(args + 1, args + n);
   auto cmd = Parser().Parse(converted);
 
@@ -108,7 +108,7 @@ void App::Run(int n, const char* const* const args) const {
   ShowHelp();
 }
 
-void App::ShowHelp() const {
+void App::ShowHelp() const noexcept {
   std::cout << "todo" << std::endl;
   std::cout << "Usage:  [command] args..." << std::endl;
   std::cout << "Commands:" << std::endl;
@@ -119,10 +119,10 @@ void App::ShowHelp() const {
 
 namespace controller::cli {
 UserApp::UserApp(Session& session, todo::UserRepo& repo,
-                 const controller::UserRenderer& ren)
+                 const controller::UserRenderer& ren) noexcept
     : session(session), repo(repo), renderer(ren) {}
 
-void UserApp::Run(const std::vector<std::string>& args) const {
+void UserApp::Run(const std::vector<std::string>& args) const noexcept {
   auto cmd = Parser().Parse(args);
 
   if (cmd.Name() == "create") {
@@ -140,7 +140,7 @@ void UserApp::Run(const std::vector<std::string>& args) const {
 }
 
 void UserApp::Create(const std::string& email,
-                     const std::string& password) const {
+                     const std::string& password) const noexcept {
   auto user = usecase::CreateUser(repo).Do(email, password);
 
   session.SetAuthenticatedUserID(user.ID());
@@ -149,7 +149,7 @@ void UserApp::Create(const std::string& email,
 }
 
 void UserApp::Authenticate(const std::string& email,
-                           const std::string& password) const {
+                           const std::string& password) const noexcept {
   auto [user, ok] = usecase::AuthenticateUser(repo).Do(email, password);
   if (!ok) {
     renderer.ShowErr("invalid credentials");
@@ -161,7 +161,7 @@ void UserApp::Authenticate(const std::string& email,
   renderer.Show(user);
 }
 
-void UserApp::ShowHelp() const {
+void UserApp::ShowHelp() const noexcept {
   std::cout << "user" << std::endl;
   std::cout << "Usage:  [command] args..." << std::endl;
   std::cout << "Commands:" << std::endl;
@@ -172,10 +172,10 @@ void UserApp::ShowHelp() const {
 
 namespace controller::cli {
 TaskApp::TaskApp(Session& session, todo::TaskRepo& repo,
-                 const controller::TaskRenderer& ren)
+                 const controller::TaskRenderer& ren) noexcept
     : session(session), repo(repo), renderer(ren) {}
 
-void TaskApp::Run(const std::vector<std::string>& args) const {
+void TaskApp::Run(const std::vector<std::string>& args) const noexcept {
   auto cmd = Parser().Parse(args);
 
   if (cmd.Name() == "get") {
@@ -228,31 +228,34 @@ void TaskApp::Run(const std::vector<std::string>& args) const {
   ShowHelp();
 }
 
-void TaskApp::Get(const std::string& userID) const {
+void TaskApp::Get(const std::string& userID) const noexcept {
   auto tasks = usecase::GetTasks(repo).Do(userID);
 
   renderer.Show(tasks);
 }
 
-void TaskApp::Create(const std::string& userID, const std::string& name) const {
+void TaskApp::Create(const std::string& userID, const std::string& name) const
+    noexcept {
   auto task = usecase::CreateTask(repo).Do(userID, name);
 
   renderer.Show(task);
 }
 
-void TaskApp::Complete(const std::string& id, const std::string& userID) const {
+void TaskApp::Complete(const std::string& id, const std::string& userID) const
+    noexcept {
   auto task = usecase::CompleteTask(repo).Do(id, userID);
 
   renderer.ShowMessage("The task is successfully completed.");
   renderer.Show(task);
 }
 
-void TaskApp::Delete(const std::string& id, const std::string& userID) const {
+void TaskApp::Delete(const std::string& id, const std::string& userID) const
+    noexcept {
   usecase::DeleteTask(repo).Do(id, userID);
   renderer.ShowMessage("The task is successfully delete.");
 }
 
-void TaskApp::ShowHelp() const {
+void TaskApp::ShowHelp() const noexcept {
   std::cout << "task" << std::endl;
   std::cout << "Usage:  [command] args..." << std::endl;
   std::cout << "Commands:" << std::endl;

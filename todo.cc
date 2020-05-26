@@ -4,7 +4,8 @@
 #include <string>
 
 namespace todo {
-Hash::Hash(const std::string& plain) : hash(std::hash<std::string>{}(plain)) {}
+Hash::Hash(const std::string& plain) noexcept
+    : hash(std::hash<std::string>{}(plain)) {}
 
 bool Hash::Compare(const std::string& plain) const {
   auto hash = std::hash<std::string>{}(plain);
@@ -14,7 +15,7 @@ bool Hash::Compare(const std::string& plain) const {
 
 namespace todo {
 User::User(const std::string& id, const std::string& email,
-           const std::string& password)
+           const std::string& password) noexcept
     : id(id), email(email), password(Hash(password)) {}
 
 const std::string& User::ID() const { return id; }
@@ -26,7 +27,7 @@ const Hash& User::Password() const { return password; }
 
 namespace todo {
 Task::Task(const std::string& id, const std::string& userID,
-           const std::string& name)
+           const std::string& name) noexcept
     : id(id), userID(userID), name(name) {}
 
 const std::string& Task::ID() const { return id; }
