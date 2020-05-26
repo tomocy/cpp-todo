@@ -63,10 +63,13 @@ class Task {
 
   const std::string& Name() const;
 
+  bool IsCompleted() const;
+
  private:
   std::string id;
   std::string userID;
   std::string name;
+  bool completed;
 };
 }  // namespace todo
 
