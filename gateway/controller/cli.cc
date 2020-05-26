@@ -209,7 +209,7 @@ void TaskApp::Run(const std::vector<std::string>& args) const {
     }
 
     auto id = cmd.Flag("id");
-    Delete(id);
+    Delete(id, userID);
     return;
   }
 
@@ -228,8 +228,8 @@ void TaskApp::Create(const std::string& userID, const std::string& name) const {
   renderer.Show(task);
 }
 
-void TaskApp::Delete(const std::string& id) const {
-  usecase::DeleteTask(repo).Do(id);
+void TaskApp::Delete(const std::string& id, const std::string& userID) const {
+  usecase::DeleteTask(repo).Do(id, userID);
   renderer.ShowMessage("The task is successfully delete.");
 }
 
