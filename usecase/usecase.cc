@@ -60,6 +60,23 @@ todo::Task CreateTask::Do(const std::string& userID, const std::string& name) {
 }  // namespace usecase
 
 namespace usecase {
+CompleteTask::CompleteTask(todo::TaskRepo& repo) : repo(repo) {}
+
+todo::Task CompleteTask::Do(const std::string& id, const std::string& _) {
+  auto [task, found] = repo.Find(id);
+  if (!found) {
+    return todo::Task();
+  }
+
+  task.Complete();
+
+  repo.Save(task);
+
+  return task;
+}
+}  // namespace usecase
+
+namespace usecase {
 DeleteTask::DeleteTask(todo::TaskRepo& repo) : repo(repo) {}
 
 void DeleteTask::Do(const std::string& id) {
