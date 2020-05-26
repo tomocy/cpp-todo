@@ -66,8 +66,12 @@ std::vector<todo::Task> TaskRepo::Get(const std::string& userID) {
   return tasks;
 }
 
-std::tuple<todo::Task, bool> TaskRepo::Find(const std::string& id) {
+std::tuple<todo::Task, bool> TaskRepo::FindOfUser(const std::string& id,
+                                                  const std::string& userID) {
   if (tasks.find(id) == tasks.end()) {
+    return {todo::Task(), false};
+  }
+  if (tasks.at(id).UserID() != userID) {
     return {todo::Task(), false};
   }
 
