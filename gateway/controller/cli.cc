@@ -141,11 +141,14 @@ void UserApp::Run(const std::vector<std::string>& args) const noexcept {
 
 void UserApp::Create(const std::string& email,
                      const std::string& password) const noexcept {
-  auto user = usecase::CreateUser(repo).Do(email, password);
+  try {
+    auto user = usecase::CreateUser(repo).Do(email, password);
+    session.SetAuthenticatedUserID(user.ID());
 
-  session.SetAuthenticatedUserID(user.ID());
-
-  renderer.Show(user);
+    renderer.Show(user);
+  } catch (const todo::Exception& e) {
+    renderer.ShowErr(e.what());
+  }
 }
 
 void UserApp::Authenticate(const std::string& email,
@@ -236,23 +239,35 @@ void TaskApp::Get(const std::string& userID) const noexcept {
 
 void TaskApp::Create(const std::string& userID, const std::string& name) const
     noexcept {
-  auto task = usecase::CreateTask(repo).Do(userID, name);
+  try {
+    auto task = usecase::CreateTask(repo).Do(userID, name);
 
-  renderer.Show(task);
+    renderer.Show(task);
+  } catch (const todo::Exception& e) {
+    renderer.ShowErr(e.what());
+  }
 }
 
 void TaskApp::Complete(const std::string& id, const std::string& userID) const
     noexcept {
-  auto task = usecase::CompleteTask(repo).Do(id, userID);
+  try {
+    auto task = usecase::CompleteTask(repo).Do(id, userID);
 
-  renderer.ShowMessage("The task is successfully completed.");
-  renderer.Show(task);
+    renderer.ShowMessage("The task is successfully completed.");
+    renderer.Show(task);
+  } catch (const todo::Exception& e) {
+    renderer.ShowErr(e.what());
+  }
 }
 
 void TaskApp::Delete(const std::string& id, const std::string& userID) const
     noexcept {
-  usecase::DeleteTask(repo).Do(id, userID);
-  renderer.ShowMessage("The task is successfully delete.");
+  try {
+    usecase::DeleteTask(repo).Do(id, userID);
+    renderer.ShowMessage("The task is successfully delete.");
+  } catch (const todo::Exception& e) {
+    renderer.ShowErr(e.what());
+  }
 }
 
 void TaskApp::ShowHelp() const noexcept {
