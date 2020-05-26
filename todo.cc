@@ -36,4 +36,6 @@ const std::string& Task::UserID() const { return userID; }
 const std::string& Task::Name() const { return name; }
 
 bool Task::IsCompleted() const { return completed; }
+
+void Task::Complete() { completed = true; }
 }  // namespace todo

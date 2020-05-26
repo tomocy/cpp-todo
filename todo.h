@@ -65,6 +65,8 @@ class Task {
 
   bool IsCompleted() const;
 
+  void Complete();
+
  private:
   std::string id;
   std::string userID;
