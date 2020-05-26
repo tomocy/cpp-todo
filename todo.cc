@@ -40,3 +40,9 @@ bool Task::IsCompleted() const { return completed; }
 
 void Task::Complete() { completed = true; }
 }  // namespace todo
+
+namespace todo {
+Exception::Exception(const std::string& msg) noexcept : msg(msg) {}
+
+const char* Exception::what() const noexcept { return msg.c_str(); }
+}  // namespace todo

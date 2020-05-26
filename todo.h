@@ -89,4 +89,16 @@ class TaskRepo {
 };
 }  // namespace todo
 
+namespace todo {
+class Exception : public std::exception {
+ public:
+  explicit Exception(const std::string& msg) noexcept;
+
+  const char* what() const noexcept;
+
+ private:
+  const std::string msg;
+};
+}  // namespace todo
+
 #endif
