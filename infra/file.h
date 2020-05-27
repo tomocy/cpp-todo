@@ -31,10 +31,10 @@ struct Store {
  public:
   Store() = default;
 
-  Store(const std::vector<User>& users);
+  Store(const std::vector<User>& users) noexcept;
 
   std::vector<User> users;
-Store(const std::vector<User>& users) noexcept;
+}
 }  // namespace infra::file
 
 #endif
