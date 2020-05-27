@@ -71,3 +71,13 @@ TEST(CompleteTask, Success) {
 
   EXPECT_TRUE(task.IsCompleted());
 }
+
+TEST(DeleteTask, Success) {
+  auto repo = infra::memory::TaskRepo();
+
+  auto task = usecase::CreateTask(repo).Do("test user id", "test name");
+
+  usecase::DeleteTask(repo).Do(task.ID(), task.UserID());
+
+  EXPECT_EQ(repo.Tasks().size(), 0);
+}
