@@ -13,6 +13,8 @@ class Hash {
 
   bool Compare(const std::string& plain) const;
 
+  std::string ToString() const noexcept;
+
  private:
   std::size_t hash;
 };

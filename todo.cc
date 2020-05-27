@@ -11,6 +11,8 @@ bool Hash::Compare(const std::string& plain) const {
   auto hash = std::hash<std::string>{}(plain);
   return this->hash == hash;
 }
+
+std::string Hash::ToString() const noexcept { return std::to_string(hash); }
 }  // namespace todo
 
 namespace todo {
