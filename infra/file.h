@@ -29,7 +29,7 @@ struct Store {
   Store(const std::vector<User>& users);
 
   std::vector<User> users;
-};
+Store(const std::vector<User>& users) noexcept;
 }  // namespace infra::file
 
 #endif
