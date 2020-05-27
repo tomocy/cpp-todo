@@ -35,6 +35,19 @@ TEST(AuthenticateUser, Success) {
   EXPECT_EQ(user.Email(), created.Email());
 }
 
+TEST(GetTasks, Success) {
+  auto repo = infra::memory::TaskRepo();
+
+  auto userID = "test user id";
+
+  auto task = usecase::CreateTask(repo).Do(userID, "test name");
+
+  auto tasks = usecase::GetTasks(repo).Do(userID);
+
+  EXPECT_EQ(tasks.size(), 1);
+  EXPECT_EQ(tasks.at(0).UserID(), userID);
+}
+
 TEST(CreateTask, Success) {
   auto repo = infra::memory::TaskRepo();
 
