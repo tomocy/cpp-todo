@@ -1,9 +1,12 @@
 #include <cstdlib>
+#include <fstream>
+#include <iostream>
 #include <map>
 #include <string>
 
 #include "gateway/controller/cli.h"
 #include "gateway/presenter/text.h"
+#include "infra/file.h"
 #include "infra/memory.h"
 
 int main(int n, const char* const* const args) {
@@ -12,8 +15,7 @@ int main(int n, const char* const* const args) {
   auto session = infra::memory::Session();
   session.SetAuthenticatedUserID(authenticatedUserID);
 
-  auto userRepo = infra::memory::UserRepo();
-  userRepo.Save(todo::User(authenticatedUserID, "test@exampl.com", "aiueo"));
+  auto userRepo = infra::file::UserRepo(".");
   const auto userRen = presenter::text::UserRenderer();
 
   auto taskRepo = infra::memory::TaskRepo();

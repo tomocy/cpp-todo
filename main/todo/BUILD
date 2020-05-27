@@ -7,6 +7,7 @@ cc_binary(
         "//:todo",
         "//gateway/controller:cli",
         "//gateway/presenter:text",
+        "//infra:file",
         "//infra:memory",
     ],
 )

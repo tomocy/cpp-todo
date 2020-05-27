@@ -25,6 +25,9 @@ cc_library(
     name = "file",
     srcs = ["file.cc"],
     hdrs = ["file.h"],
+    visibility = [
+        "//main/todo:__pkg__",
+    ],
     deps = [
         ":rand",
         "//:todo",
