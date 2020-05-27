@@ -1,9 +1,9 @@
 #include "infra/file.h"
 
 #include <fstream>
+#include <map>
 #include <string>
 #include <tuple>
-#include <vector>
 
 #include "external/json/single_include/nlohmann/json.hpp"
 #include "infra/rand.h"
@@ -32,7 +32,8 @@ void from_json(const nlohmann::json& json, User& user) {
 }  // namespace infra::file
 
 namespace infra::file {
-Store::Store(const std::vector<User>& users) noexcept : users(users) {}
+Store::Store(const std::map<std::string, User>& users) noexcept
+    : users(users) {}
 
 void to_json(nlohmann::json& json, const Store& store) {
   json = nlohmann::json{{"users", store.users}};
@@ -78,7 +79,7 @@ std::tuple<todo::User, bool> UserRepo::FindByEmail(
     const std::string& email) const noexcept {
   auto store = file.Load();
 
-  for (auto user : store.users) {
+  for (auto [_, user] : store.users) {
     if (user.email != email) {
       continue;
     }
@@ -91,17 +92,10 @@ std::tuple<todo::User, bool> UserRepo::FindByEmail(
 
 void UserRepo::Save(const todo::User& user) noexcept {
   auto store = file.Load();
-  for (auto i = 0; i < store.users.size(); ++i) {
-    if (store.users.at(i).id != user.ID()) {
-      continue;
-    }
 
-    store.users.at(i) = user;
-    file.Save(store);
-    return;
-  }
+  auto converted = User(user);
+  store.users[converted.id] = converted;
 
-  store.users.push_back(user);
   file.Save(store);
 }
 }  // namespace infra::file

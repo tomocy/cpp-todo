@@ -2,9 +2,9 @@
 #define TOMOCY_CPP_TODO_INFRA_FILE_H
 
 #include <fstream>
+#include <map>
 #include <string>
 #include <tuple>
-#include <vector>
 
 #include "external/json/single_include/nlohmann/json.hpp"
 #include "todo.h"
@@ -33,9 +33,9 @@ struct Store {
  public:
   Store() = default;
 
-  Store(const std::vector<User>& users) noexcept;
+  Store(const std::map<std::string, User>& users) noexcept;
 
-  std::vector<User> users;
+  std::map<std::string, User> users;
 };
 
 void to_json(nlohmann::json& json, const Store& store);
