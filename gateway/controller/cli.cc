@@ -66,7 +66,7 @@ Command Parser::Parse(const std::vector<std::string>& args) const noexcept {
 }
 
 bool Parser::IsFlag(const std::string& s) const noexcept {
-  auto i = s.find("-");
+  auto i = s.find("--");
   return i != std::string::npos && i == 0;
 }
 
