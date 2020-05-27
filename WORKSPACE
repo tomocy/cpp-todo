@@ -14,3 +14,10 @@ http_archive(
     strip_prefix = "googletest-release-1.8.1",
     url = "https://github.com/google/googletest/archive/release-1.8.1.zip",
 )
+
+http_archive(
+    name = "json",
+    build_file = "@//:BUILD",
+    strip_prefix = "json-3.7.3",
+    url = "https://github.com/nlohmann/json/archive/v3.7.3.zip",
+)
