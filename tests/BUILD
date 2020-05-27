@@ -4,6 +4,7 @@ cc_test(
     name = "tests",
     srcs = ["usecase_test.cc"],
     deps = [
+        "//infra:memory",
         "//usecase",
         "@gtest//:gtest_main",
     ],

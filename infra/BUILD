@@ -12,6 +12,7 @@ cc_library(
     hdrs = ["memory.h"],
     visibility = [
         "//main/todo:__pkg__",
+        "//tests:__pkg__",
     ],
     deps = [
         ":rand",
