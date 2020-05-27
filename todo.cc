@@ -3,6 +3,8 @@
 #include <functional>
 #include <string>
 
+#include "external/bcrypt/include/bcrypt/BCrypt.hpp"
+
 namespace todo {
 HashedString::HashedString(const std::string& s) noexcept : s(s) {}
 
