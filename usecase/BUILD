@@ -6,6 +6,7 @@ cc_library(
     hdrs = ["usecase.h"],
     visibility = [
         "//gateway/controller:__pkg__",
+        "//tests:__pkg__",
     ],
     deps = [
         "//:todo",
