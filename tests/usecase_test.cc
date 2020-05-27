@@ -61,3 +61,13 @@ TEST(CreateTask, Success) {
   EXPECT_EQ(task.Name(), name);
   EXPECT_FALSE(task.IsCompleted());
 }
+
+TEST(CompleteTask, Success) {
+  auto repo = infra::memory::TaskRepo();
+
+  auto created = usecase::CreateTask(repo).Do("test user id", "test name");
+
+  auto task = usecase::CompleteTask(repo).Do(created.ID(), created.UserID());
+
+  EXPECT_TRUE(task.IsCompleted());
+}
