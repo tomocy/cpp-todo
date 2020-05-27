@@ -1,0 +1,4 @@
+#ifndef TOMOCY_CPP_TODO_INFRA_FILE_H
+#define TOMOCY_CPP_TODO_INFRA_FILE_H
+
+#endif

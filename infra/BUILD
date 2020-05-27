@@ -20,3 +20,9 @@ cc_library(
         "//gateway/controller:cli",
     ],
 )
+
+cc_library(
+    name = "file",
+    srcs = ["file.cc"],
+    hdrs = ["file.h"],
+)
