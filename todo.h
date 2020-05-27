@@ -5,18 +5,32 @@
 #include <tuple>
 
 namespace todo {
+class HashedString {
+ public:
+  explicit HashedString(const std::string& s) noexcept;
+
+  const std::string& ToString() const noexcept;
+
+ private:
+  std::string s;
+};
+}  // namespace todo
+
+namespace todo {
 class Hash {
  public:
   Hash() = default;
 
   explicit Hash(const std::string& plain) noexcept;
 
+  explicit Hash(const HashedString& hash) noexcept;
+
   bool Compare(const std::string& plain) const;
 
   std::string ToString() const noexcept;
 
  private:
-  std::size_t hash;
+  std::string hash;
 };
 }  // namespace todo
 

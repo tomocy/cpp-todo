@@ -4,15 +4,22 @@
 #include <string>
 
 namespace todo {
+HashedString::HashedString(const std::string& s) noexcept : s(s) {}
+
+const std::string& HashedString::ToString() const noexcept { return s; }
+}  // namespace todo
+
+namespace todo {
 Hash::Hash(const std::string& plain) noexcept
-    : hash(std::hash<std::string>{}(plain)) {}
+    : hash(BCrypt::generateHash(plain)) {}
+
+Hash::Hash(const HashedString& hash) noexcept : hash(hash.ToString()) {}
 
 bool Hash::Compare(const std::string& plain) const {
-  auto hash = std::hash<std::string>{}(plain);
-  return this->hash == hash;
+  return BCrypt::validatePassword(plain, hash);
 }
 
-std::string Hash::ToString() const noexcept { return std::to_string(hash); }
+std::string Hash::ToString() const noexcept { return hash; }
 }  // namespace todo
 
 namespace todo {
