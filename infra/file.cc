@@ -30,4 +30,12 @@ void from_json(const nlohmann::json& json, User& user) {
 
 namespace infra::file {
 Store::Store(const std::vector<User>& users) noexcept : users(users) {}
+
+void to_json(nlohmann::json& json, const Store& store) {
+  json = nlohmann::json{{"users", store.users}};
+}
+
+void from_json(const nlohmann::json& json, Store& store) {
+  json.at("users").get_to(store);
+}
 }  // namespace infra::file

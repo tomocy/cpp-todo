@@ -34,7 +34,11 @@ struct Store {
   Store(const std::vector<User>& users) noexcept;
 
   std::vector<User> users;
-}
+};
+
+void to_json(nlohmann::json& json, const Store& store);
+
+void from_json(const nlohmann::json& json, Store& store);
 }  // namespace infra::file
 
 #endif
