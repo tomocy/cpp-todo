@@ -95,4 +95,8 @@ void TaskRepo::Save(const todo::Task& task) noexcept {
 void TaskRepo::Delete(const todo::Task& task) noexcept {
   tasks.erase(task.ID());
 }
+
+const std::map<std::string, todo::Task>& TaskRepo::Tasks() const noexcept {
+  return tasks;
+}
 }  // namespace infra::memory
