@@ -1,5 +1,6 @@
 #include "infra/file.h"
 
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -37,5 +38,28 @@ void to_json(nlohmann::json& json, const Store& store) {
 
 void from_json(const nlohmann::json& json, Store& store) {
   json.at("users").get_to(store);
+}
+}  // namespace infra::file
+
+namespace infra::file {
+File::File(const std::string& workspace) noexcept : workspace(workspace) {}
+
+Store File::Load() const noexcept {
+  std::ifstream file(StorePath());
+  nlohmann::json json;
+  file >> json;
+
+  return json.get<Store>();
+}
+
+void File::Save(const Store& store) const noexcept {
+  std::ofstream file(StorePath());
+  auto json = nlohmann::json(store);
+
+  file << json;
+}
+
+std::string File::StorePath() const noexcept {
+  return workspace + "/store.json";
 }
 }  // namespace infra::file

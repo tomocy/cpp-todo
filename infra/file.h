@@ -1,6 +1,7 @@
 #ifndef TOMOCY_CPP_TODO_INFRA_FILE_H
 #define TOMOCY_CPP_TODO_INFRA_FILE_H
 
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -39,6 +40,22 @@ struct Store {
 void to_json(nlohmann::json& json, const Store& store);
 
 void from_json(const nlohmann::json& json, Store& store);
+}  // namespace infra::file
+
+namespace infra::file {
+class File {
+ public:
+  explicit File(const std::string& workspace) noexcept;
+
+  Store Load() const noexcept;
+
+  void Save(const Store& store) const noexcept;
+
+ private:
+  std::string StorePath() const noexcept;
+
+  std::string workspace;
+};
 }  // namespace infra::file
 
 #endif
