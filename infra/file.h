@@ -31,7 +31,7 @@ void from_json(const nlohmann::json& json, User& user);
 namespace infra::file {
 struct Store {
  public:
-  Store() = default;
+  Store() noexcept;
 
   Store(const std::map<std::string, User>& users) noexcept;
 
@@ -53,6 +53,10 @@ class File {
   void Save(const Store& store) const noexcept;
 
  private:
+  void InitWorkspaceIfNotExist() const noexcept;
+
+  bool DoesStoreFileExist() const noexcept;
+
   std::string StorePath() const noexcept;
 
   std::string workspace;

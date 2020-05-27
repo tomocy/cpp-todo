@@ -32,6 +32,8 @@ void from_json(const nlohmann::json& json, User& user) {
 }  // namespace infra::file
 
 namespace infra::file {
+Store::Store() noexcept : users(std::map<std::string, User>()) {}
+
 Store::Store(const std::map<std::string, User>& users) noexcept
     : users(users) {}
 
@@ -48,6 +50,8 @@ namespace infra::file {
 File::File(const std::string& workspace) noexcept : workspace(workspace) {}
 
 Store File::Load() const noexcept {
+  InitWorkspaceIfNotExist();
+
   std::ifstream file(StorePath());
   nlohmann::json json;
   file >> json;
@@ -56,10 +60,28 @@ Store File::Load() const noexcept {
 }
 
 void File::Save(const Store& store) const noexcept {
+  InitWorkspaceIfNotExist();
+
   std::ofstream file(StorePath());
   auto json = nlohmann::json(store);
 
   file << json;
+}
+
+void File::InitWorkspaceIfNotExist() const noexcept {
+  if (DoesStoreFileExist()) {
+    return;
+  }
+
+  std::ofstream file(StorePath());
+  auto json = nlohmann::json(Store());
+
+  file << json;
+}
+
+bool File::DoesStoreFileExist() const noexcept {
+  std::ifstream file(StorePath());
+  return file.is_open();
 }
 
 std::string File::StorePath() const noexcept {
