@@ -39,6 +39,8 @@ class User {
  public:
   User() = default;
 
+  User(const std::string& id, const std::string& email, const Hash& password);
+
   User(const std::string& id, const std::string& email,
        const std::string& password);
 
@@ -52,6 +54,8 @@ class User {
   void setID(const std::string& id);
 
   void setEmail(const std::string& email);
+
+  void setPassword(const Hash& password);
 
   void setPassword(const std::string& password);
 

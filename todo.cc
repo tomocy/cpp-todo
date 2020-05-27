@@ -26,6 +26,13 @@ std::string Hash::ToString() const noexcept { return hash; }
 
 namespace todo {
 User::User(const std::string& id, const std::string& email,
+           const Hash& password) {
+  setID(id);
+  setEmail(email);
+  setPassword(password);
+}
+
+User::User(const std::string& id, const std::string& email,
            const std::string& password) {
   setID(id);
   setEmail(email);
@@ -53,6 +60,8 @@ void User::setEmail(const std::string& email) {
 
   this->email = email;
 }
+
+void User::setPassword(const Hash& password) { this->password = password; }
 
 void User::setPassword(const std::string& password) {
   if (password.empty()) {
