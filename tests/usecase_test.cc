@@ -10,7 +10,7 @@ TEST(CreateUser, Success) {
   auto repo = infra::memory::UserRepo();
 
   auto [email, password] =
-      std::tuple{std::string("aiueo"), std::string("aiueo")};
+      std::tuple{std::string("test email"), std::string("test password")};
 
   auto user = usecase::CreateUser(repo).Do(email, password);
 
@@ -23,7 +23,7 @@ TEST(AuthenticateUser, Success) {
   auto repo = infra::memory::UserRepo();
 
   auto [email, password] =
-      std::tuple{std::string("aiueo"), std::string("aiueo")};
+      std::tuple{std::string("test email"), std::string("test password")};
 
   auto created = usecase::CreateUser(repo).Do(email, password);
 
@@ -33,4 +33,18 @@ TEST(AuthenticateUser, Success) {
   EXPECT_TRUE(authenticated);
   EXPECT_EQ(user.ID(), created.ID());
   EXPECT_EQ(user.Email(), created.Email());
+}
+
+TEST(CreateTask, Success) {
+  auto repo = infra::memory::TaskRepo();
+
+  auto [userID, name] =
+      std::tuple{std::string("test user id"), std::string("test name")};
+
+  auto task = usecase::CreateTask(repo).Do(userID, name);
+
+  EXPECT_FALSE(task.ID().empty());
+  EXPECT_EQ(task.UserID(), userID);
+  EXPECT_EQ(task.Name(), name);
+  EXPECT_FALSE(task.IsCompleted());
 }

@@ -54,7 +54,8 @@ void User::setPassword(const std::string& password) {
 
 namespace todo {
 Task::Task(const std::string& id, const std::string& userID,
-           const std::string& name) {
+           const std::string& name)
+    : completed(false) {
   setID(id);
   setUserID(userID);
   setName(name);
