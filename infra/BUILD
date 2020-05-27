@@ -26,6 +26,7 @@ cc_library(
     srcs = ["file.cc"],
     hdrs = ["file.h"],
     deps = [
+        ":rand",
         "//:todo",
         "@json",
     ],

@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "external/json/single_include/nlohmann/json.hpp"
@@ -55,6 +56,23 @@ class File {
   std::string StorePath() const noexcept;
 
   std::string workspace;
+};
+}  // namespace infra::file
+
+namespace infra::file {
+class UserRepo : public todo::UserRepo {
+ public:
+  explicit UserRepo(const std::string& workspace) noexcept;
+
+  std::string NextID() const noexcept override;
+
+  std::tuple<todo::User, bool> FindByEmail(const std::string& email) const
+      noexcept override;
+
+  void Save(const todo::User& user) noexcept override;
+
+ private:
+  File file;
 };
 }  // namespace infra::file
 

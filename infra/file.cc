@@ -2,9 +2,11 @@
 
 #include <fstream>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "external/json/single_include/nlohmann/json.hpp"
+#include "infra/rand.h"
 #include "todo.h"
 
 namespace infra::file {
@@ -61,5 +63,45 @@ void File::Save(const Store& store) const noexcept {
 
 std::string File::StorePath() const noexcept {
   return workspace + "/store.json";
+}
+}  // namespace infra::file
+
+namespace infra::file {
+UserRepo::UserRepo(const std::string& workspace) noexcept
+    : file(File(workspace)) {}
+
+std::string UserRepo::NextID() const noexcept {
+  return infra::rand::Generate(30);
+}
+
+std::tuple<todo::User, bool> UserRepo::FindByEmail(
+    const std::string& email) const noexcept {
+  auto store = file.Load();
+
+  for (auto user : store.users) {
+    if (user.email != email) {
+      continue;
+    }
+
+    return {user.ToUser(), true};
+  }
+
+  return {todo::User(), false};
+}
+
+void UserRepo::Save(const todo::User& user) noexcept {
+  auto store = file.Load();
+  for (auto i = 0; i < store.users.size(); ++i) {
+    if (store.users.at(i).id != user.ID()) {
+      continue;
+    }
+
+    store.users.at(i) = user;
+    file.Save(store);
+    return;
+  }
+
+  store.users.push_back(user);
+  file.Save(store);
 }
 }  // namespace infra::file
