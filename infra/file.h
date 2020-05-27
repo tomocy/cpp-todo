@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "external/json/single_include/nlohmann/json.hpp"
 #include "todo.h"
 
 namespace infra::file {
@@ -19,6 +20,10 @@ struct User {
   std::string email;
   std::string password;
 };
+
+void to_json(nlohmann::json& json, const User& user);
+
+void from_json(const nlohmann::json& json, User& user);
 }  // namespace infra::file
 
 namespace infra::file {

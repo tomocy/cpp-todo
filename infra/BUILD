@@ -25,4 +25,8 @@ cc_library(
     name = "file",
     srcs = ["file.cc"],
     hdrs = ["file.h"],
+    deps = [
+        "//:todo",
+        "@json",
+    ],
 )
