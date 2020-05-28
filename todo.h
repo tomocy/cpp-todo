@@ -120,7 +120,7 @@ class TaskRepo {
   virtual std::tuple<todo::Task, bool> FindOfUser(
       const std::string& id, const std::string& userID) const = 0;
   virtual void Save(const Task&) = 0;
-  virtual void Delete(const Task&) = 0;
+  virtual void Delete(const std::string& id, const std::string& userID) = 0;
 };
 }  // namespace todo
 
