@@ -57,11 +57,14 @@ struct Store {
   Store() noexcept;
 
   Store(const std::map<std::string, std::string>& session,
-        const std::map<std::string, User>& users) noexcept;
+        const std::map<std::string, User>& users,
+        const std::map<std::string, Task>& tasks) noexcept;
 
   std::map<std::string, std::string> session;
 
   std::map<std::string, User> users;
+
+  std::map<std::string, Task> tasks;
 };
 
 void to_json(nlohmann::json& json, const Store& store);

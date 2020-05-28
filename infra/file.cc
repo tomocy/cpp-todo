@@ -63,16 +63,20 @@ namespace infra::file {
 Store::Store() noexcept : users(std::map<std::string, User>()) {}
 
 Store::Store(const std::map<std::string, std::string>& session,
-             const std::map<std::string, User>& users) noexcept
-    : session(session), users(users) {}
+             const std::map<std::string, User>& users,
+             const std::map<std::string, Task>& tasks) noexcept
+    : session(session), users(users), tasks(tasks) {}
 
 void to_json(nlohmann::json& json, const Store& store) {
-  json = nlohmann::json{{"session", store.session}, {"users", store.users}};
+  json = nlohmann::json{{"session", store.session},
+                        {"users", store.users},
+                        {"tasks", store.tasks}};
 }
 
 void from_json(const nlohmann::json& json, Store& store) {
   json.at("session").get_to(store.session);
   json.at("users").get_to(store.users);
+  json.at("tasks").get_to(store.tasks);
 }
 }  // namespace infra::file
 
