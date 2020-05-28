@@ -35,7 +35,10 @@ struct Store {
  public:
   Store() noexcept;
 
-  Store(const std::map<std::string, User>& users) noexcept;
+  Store(const std::map<std::string, std::string>& session,
+        const std::map<std::string, User>& users) noexcept;
+
+  std::map<std::string, std::string> session;
 
   std::map<std::string, User> users;
 };
