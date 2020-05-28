@@ -32,6 +32,26 @@ void from_json(const nlohmann::json& json, User& user);
 }  // namespace infra::file
 
 namespace infra::file {
+struct Task {
+ public:
+  Task() = default;
+
+  explicit Task(const todo::Task& task) noexcept;
+
+  todo::Task ToTask() const noexcept;
+
+  std::string id;
+  std::string userID;
+  std::string name;
+  bool completed;
+};
+
+void to_json(nlohmann::json& json, const Task& task);
+
+void from_json(const nlohmann::json& json, Task& task);
+}  // namespace infra::file
+
+namespace infra::file {
 struct Store {
  public:
   Store() noexcept;

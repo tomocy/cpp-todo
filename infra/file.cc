@@ -34,6 +34,32 @@ void from_json(const nlohmann::json& json, User& user) {
 }  // namespace infra::file
 
 namespace infra::file {
+Task::Task(const todo::Task& task) noexcept
+    : id(task.ID()),
+      userID(task.UserID()),
+      name(task.Name()),
+      completed(task.IsCompleted()) {}
+
+todo::Task Task::ToTask() const noexcept {
+  return todo::Task(id, userID, name, completed);
+}
+
+void to_json(nlohmann::json& json, const Task& task) {
+  json = nlohmann::json{{"id", task.id},
+                        {"user_id", task.userID},
+                        {"name", task.name},
+                        {"completed", task.completed}};
+}
+
+void from_json(const nlohmann::json& json, Task& task) {
+  json.at("id").get_to(task.id);
+  json.at("user_id").get_to(task.userID);
+  json.at("name").get_to(task.name);
+  json.at("completed").get_to(task.completed);
+}
+}  // namespace infra::file
+
+namespace infra::file {
 Store::Store() noexcept : users(std::map<std::string, User>()) {}
 
 Store::Store(const std::map<std::string, std::string>& session,
