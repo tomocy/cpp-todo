@@ -81,11 +81,6 @@ namespace usecase {
 DeleteTask::DeleteTask(todo::TaskRepo& repo) noexcept : repo(repo) {}
 
 void DeleteTask::Do(const std::string& id, const std::string& userID) {
-  auto [task, found] = repo.FindOfUser(id, userID);
-  if (!found) {
-    throw todo::Exception("no such task");
-  }
-
-  repo.Delete(task);
+  repo.Delete(id, userID);
 }
 }  // namespace usecase
