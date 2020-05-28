@@ -39,10 +39,10 @@ class User {
  public:
   User() = default;
 
-  User(const std::string& id, const std::string& email, const Hash& password);
-
   User(const std::string& id, const std::string& email,
        const std::string& password);
+
+  User(const std::string& id, const std::string& email, const Hash& password);
 
   const std::string& ID() const;
 
@@ -83,6 +83,9 @@ class Task {
 
   Task(const std::string& id, const std::string& userID,
        const std::string& name);
+
+  Task(const std::string& id, const std::string& userID,
+       const std::string& name, bool completed);
 
   const std::string& ID() const;
 

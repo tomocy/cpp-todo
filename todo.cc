@@ -26,14 +26,14 @@ std::string Hash::ToString() const noexcept { return hash; }
 
 namespace todo {
 User::User(const std::string& id, const std::string& email,
-           const Hash& password) {
+           const std::string& password) {
   setID(id);
   setEmail(email);
   setPassword(password);
 }
 
 User::User(const std::string& id, const std::string& email,
-           const std::string& password) {
+           const Hash& password) {
   setID(id);
   setEmail(email);
   setPassword(password);
@@ -76,6 +76,14 @@ namespace todo {
 Task::Task(const std::string& id, const std::string& userID,
            const std::string& name)
     : completed(false) {
+  setID(id);
+  setUserID(userID);
+  setName(name);
+}
+
+Task::Task(const std::string& id, const std::string& userID,
+           const std::string& name, bool completed)
+    : completed(completed) {
   setID(id);
   setUserID(userID);
   setName(name);
