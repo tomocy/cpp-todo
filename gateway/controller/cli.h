@@ -50,6 +50,7 @@ class Session {
   virtual ~Session() {}
   virtual void SetAuthenticatedUserID(const std::string& id) = 0;
   virtual std::tuple<std::string, bool> GetAuthenticatedUserID() const = 0;
+  virtual void DropAuthenticatedUserID() = 0;
 };
 }  // namespace controller::cli
 
