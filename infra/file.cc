@@ -175,3 +175,65 @@ void UserRepo::Save(const todo::User& user) noexcept {
   file.Save(store);
 }
 }  // namespace infra::file
+
+namespace infra::file {
+TaskRepo::TaskRepo(const std::string& workspace) noexcept
+    : file(File(workspace)) {}
+
+std::string TaskRepo::NextID() const noexcept {
+  return infra::rand::Generate(50);
+}
+
+std::vector<todo::Task> TaskRepo::Get(const std::string& userID) const
+    noexcept {
+  auto store = file.Load();
+
+  auto tasks = std::vector<todo::Task>();
+  for (auto [_, task] : store.tasks) {
+    if (task.userID != userID) {
+      continue;
+    }
+
+    tasks.push_back(task.ToTask());
+  }
+
+  return tasks;
+}
+
+std::tuple<todo::Task, bool> TaskRepo::FindOfUser(
+    const std::string& id, const std::string& userID) const noexcept {
+  auto store = file.Load();
+
+  if (store.tasks.find(id) == store.tasks.end()) {
+    return {todo::Task(), false};
+  }
+  if (store.tasks.at(id).userID != userID) {
+    return {todo::Task(), false};
+  }
+
+  return {store.tasks.at(id).ToTask(), true};
+}
+
+void TaskRepo::Save(const todo::Task& task) noexcept {
+  auto store = file.Load();
+
+  auto converted = Task(task);
+  store.tasks[converted.id] = converted;
+
+  file.Save(store);
+}
+
+void TaskRepo::Delete(const std::string& id,
+                      const std::string& userID) noexcept {
+  auto [task, found] = FindOfUser(id, userID);
+  if (!found) {
+    return;
+  }
+
+  auto store = file.Load();
+
+  store.tasks.erase(task.ID());
+
+  file.Save(store);
+}
+}  // namespace infra::file

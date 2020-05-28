@@ -7,6 +7,7 @@
 #include <map>
 #include <string>
 #include <tuple>
+#include <vector>
 
 #include "external/json/single_include/nlohmann/json.hpp"
 #include "gateway/controller/cli.h"
@@ -120,6 +121,30 @@ class UserRepo : public todo::UserRepo {
       noexcept override;
 
   void Save(const todo::User& user) noexcept override;
+
+ private:
+  File file;
+};
+}  // namespace infra::file
+
+namespace infra::file {
+class TaskRepo : public todo::TaskRepo {
+ public:
+  explicit TaskRepo(const std::string& workspace) noexcept;
+
+  std::string NextID() const noexcept override;
+
+  std::vector<todo::Task> Get(const std::string& userID) const
+      noexcept override;
+
+  std::tuple<todo::Task, bool> FindOfUser(const std::string& id,
+                                          const std::string& userID) const
+      noexcept override;
+
+  void Save(const todo::Task& task) noexcept override;
+
+  void Delete(const std::string& id,
+              const std::string& userID) noexcept override;
 
  private:
   File file;
