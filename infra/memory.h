@@ -21,6 +21,8 @@ class Session : public controller::cli::Session {
   std::tuple<std::string, bool> GetAuthenticatedUserID() const
       noexcept override;
 
+  void DropAuthenticatedUserID() noexcept override;
+
  private:
   const std::string kAuthenticatedUserID = "authenticated_user_id";
 

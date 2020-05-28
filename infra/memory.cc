@@ -23,6 +23,10 @@ std::tuple<std::string, bool> Session::GetAuthenticatedUserID() const noexcept {
 
   return {data.at(kAuthenticatedUserID), true};
 }
+
+void Session::DropAuthenticatedUserID() noexcept {
+  data.erase(kAuthenticatedUserID);
+}
 }  // namespace infra::memory
 
 namespace infra::memory {
