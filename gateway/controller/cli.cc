@@ -264,7 +264,7 @@ void TaskApp::Delete(const std::string& id, const std::string& userID) const
     noexcept {
   try {
     usecase::DeleteTask(repo).Do(id, userID);
-    renderer.ShowMessage("The task is successfully delete.");
+    renderer.ShowMessage("The task is successfully deleted.");
   } catch (const todo::Exception& e) {
     renderer.ShowErr(e.what());
   }
