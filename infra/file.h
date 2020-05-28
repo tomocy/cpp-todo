@@ -9,6 +9,7 @@
 #include <tuple>
 
 #include "external/json/single_include/nlohmann/json.hpp"
+#include "gateway/controller/cli.h"
 #include "todo.h"
 
 namespace infra::file {
@@ -65,6 +66,23 @@ class File {
   std::string StorePath() const noexcept;
 
   std::string workspace;
+};
+}  // namespace infra::file
+
+namespace infra::file {
+class Session : public controller::cli::Session {
+ public:
+  Session(const std::string& workspace) noexcept;
+
+  void SetAuthenticatedUserID(const std::string& userID) noexcept override;
+
+  std::tuple<std::string, bool> GetAuthenticatedUserID() const
+      noexcept override;
+
+ private:
+  const std::string kAuthenticatedUserID = "authenticated_user_id";
+
+  File file;
 };
 }  // namespace infra::file
 

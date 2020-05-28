@@ -31,6 +31,7 @@ cc_library(
     deps = [
         ":rand",
         "//:todo",
+        "//gateway/controller:cli",
         "@json",
     ],
 )

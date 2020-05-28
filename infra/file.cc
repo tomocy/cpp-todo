@@ -91,6 +91,29 @@ std::string File::StorePath() const noexcept {
 }  // namespace infra::file
 
 namespace infra::file {
+Session::Session(const std::string& workspace) noexcept
+    : file(File(workspace)) {}
+
+void Session::SetAuthenticatedUserID(const std::string& userID) noexcept {
+  auto store = file.Load();
+
+  store.session[kAuthenticatedUserID] = userID;
+
+  file.Save(store);
+}
+
+std::tuple<std::string, bool> Session::GetAuthenticatedUserID() const noexcept {
+  auto store = file.Load();
+
+  if (store.session.find(kAuthenticatedUserID) == store.session.end()) {
+    return {"", false};
+  }
+
+  return {store.session.at(kAuthenticatedUserID), true};
+}
+}  // namespace infra::file
+
+namespace infra::file {
 UserRepo::UserRepo(const std::string& workspace) noexcept
     : file(File(workspace)) {}
 
