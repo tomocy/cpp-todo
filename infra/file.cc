@@ -141,6 +141,14 @@ std::tuple<std::string, bool> Session::GetAuthenticatedUserID() const noexcept {
 
   return {store.session.at(kAuthenticatedUserID), true};
 }
+
+void Session::DropAuthenticatedUserID() noexcept {
+  auto store = file.Load();
+
+  store.session.erase(kAuthenticatedUserID);
+
+  file.Save(store);
+}
 }  // namespace infra::file
 
 namespace infra::file {
