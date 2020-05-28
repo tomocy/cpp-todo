@@ -67,7 +67,8 @@ class TaskRepo : public todo::TaskRepo {
 
   void Save(const todo::Task& task) noexcept override;
 
-  void Delete(const todo::Task& task) noexcept override;
+  void Delete(const std::string& id,
+              const std::string& userID) noexcept override;
 
   const std::map<std::string, todo::Task>& Tasks() const noexcept;
 

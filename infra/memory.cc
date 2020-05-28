@@ -92,8 +92,14 @@ void TaskRepo::Save(const todo::Task& task) noexcept {
   tasks[task.ID()] = task;
 }
 
-void TaskRepo::Delete(const todo::Task& task) noexcept {
-  tasks.erase(task.ID());
+void TaskRepo::Delete(const std::string& id,
+                      const std::string& userID) noexcept {
+  auto [_, found] = FindOfUser(id, userID);
+  if (!found) {
+    return;
+  }
+
+  tasks.erase(id);
 }
 
 const std::map<std::string, todo::Task>& TaskRepo::Tasks() const noexcept {
