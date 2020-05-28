@@ -135,6 +135,10 @@ void UserApp::Run(const std::vector<std::string>& args) const noexcept {
     Authenticate(email, password);
     return;
   }
+  if (cmd.Name() == "deauthenticate") {
+    Deauthenticate();
+    return;
+  }
 
   ShowHelp();
 }
@@ -164,12 +168,18 @@ void UserApp::Authenticate(const std::string& email,
   renderer.Show(user);
 }
 
+void UserApp::Deauthenticate() const noexcept {
+  session.DropAuthenticatedUserID();
+  renderer.ShowMessage("You are successfully logged out.");
+}
+
 void UserApp::ShowHelp() const noexcept {
   std::cout << "user" << std::endl;
   std::cout << "Usage:  [command] args..." << std::endl;
   std::cout << "Commands:" << std::endl;
   std::cout << "  create" << std::endl;
   std::cout << "  authenticate" << std::endl;
+  std::cout << "  deauthenticate" << std::endl;
 }
 }  // namespace controller::cli
 

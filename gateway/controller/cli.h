@@ -89,6 +89,8 @@ class UserApp {
   void Authenticate(const std::string& email, const std::string& password) const
       noexcept;
 
+  void Deauthenticate() const noexcept;
+
   void ShowHelp() const noexcept;
 
   Session& session;
