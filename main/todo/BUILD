@@ -8,6 +8,5 @@ cc_binary(
         "//gateway/controller:cli",
         "//gateway/presenter:text",
         "//infra:file",
-        "//infra:memory",
     ],
 )

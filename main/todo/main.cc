@@ -7,7 +7,6 @@
 #include "gateway/controller/cli.h"
 #include "gateway/presenter/text.h"
 #include "infra/file.h"
-#include "infra/memory.h"
 
 int main(int n, const char* const* const args) {
   auto workspace = std::string(".");
@@ -17,11 +16,7 @@ int main(int n, const char* const* const args) {
   auto userRepo = infra::file::UserRepo(workspace);
   const auto userRen = presenter::text::UserRenderer();
 
-  auto taskRepo = infra::memory::TaskRepo();
-  for (auto i = 0; i < 10; ++i) {
-    taskRepo.Save(todo::Task(std::to_string(i), "aiueo",
-                             "test task " + std::to_string(i)));
-  }
+  auto taskRepo = infra::file::TaskRepo(workspace);
   const auto taskRen = presenter::text::TaskRenderer();
 
   auto app =
