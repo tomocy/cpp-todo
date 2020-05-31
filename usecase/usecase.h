@@ -36,7 +36,7 @@ class GetTasks {
  public:
   GetTasks(const todo::TaskRepo& repo) noexcept;
 
-  std::vector<todo::Task> Do(const std::string& userID) const noexcept;
+  std::vector<todo::Task> Do(const std::string& user_id) const noexcept;
 
  private:
   const todo::TaskRepo& repo;
@@ -48,7 +48,7 @@ class CreateTask {
  public:
   CreateTask(todo::TaskRepo& repo) noexcept;
 
-  todo::Task Do(const std::string& userID, const std::string& name);
+  todo::Task Do(const std::string& user_id, const std::string& name);
 
  private:
   todo::TaskRepo& repo;
@@ -60,7 +60,7 @@ class CompleteTask {
  public:
   CompleteTask(todo::TaskRepo& repo) noexcept;
 
-  todo::Task Do(const std::string& id, const std::string& userID);
+  todo::Task Do(const std::string& id, const std::string& user_id);
 
  private:
   todo::TaskRepo& repo;
@@ -72,7 +72,7 @@ class DeleteTask {
  public:
   DeleteTask(todo::TaskRepo& repo) noexcept;
 
-  void Do(const std::string& id, const std::string& userID);
+  void Do(const std::string& id, const std::string& user_id);
 
  private:
   todo::TaskRepo& repo;

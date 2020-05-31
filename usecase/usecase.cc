@@ -42,17 +42,18 @@ std::tuple<todo::User, bool> AuthenticateUser::Do(
 namespace usecase {
 GetTasks::GetTasks(const todo::TaskRepo& repo) noexcept : repo(repo) {}
 
-std::vector<todo::Task> GetTasks::Do(const std::string& userID) const noexcept {
-  return repo.Get(userID);
+std::vector<todo::Task> GetTasks::Do(const std::string& user_id) const
+    noexcept {
+  return repo.Get(user_id);
 }
 }  // namespace usecase
 
 namespace usecase {
 CreateTask::CreateTask(todo::TaskRepo& repo) noexcept : repo(repo) {}
 
-todo::Task CreateTask::Do(const std::string& userID, const std::string& name) {
+todo::Task CreateTask::Do(const std::string& user_id, const std::string& name) {
   auto id = repo.NextID();
-  auto task = todo::Task(id, userID, name);
+  auto task = todo::Task(id, user_id, name);
 
   repo.Save(task);
 
@@ -63,8 +64,8 @@ todo::Task CreateTask::Do(const std::string& userID, const std::string& name) {
 namespace usecase {
 CompleteTask::CompleteTask(todo::TaskRepo& repo) noexcept : repo(repo) {}
 
-todo::Task CompleteTask::Do(const std::string& id, const std::string& userID) {
-  auto [task, found] = repo.FindOfUser(id, userID);
+todo::Task CompleteTask::Do(const std::string& id, const std::string& user_id) {
+  auto [task, found] = repo.FindOfUser(id, user_id);
   if (!found) {
     throw todo::Exception("no such task");
   }
@@ -80,7 +81,7 @@ todo::Task CompleteTask::Do(const std::string& id, const std::string& userID) {
 namespace usecase {
 DeleteTask::DeleteTask(todo::TaskRepo& repo) noexcept : repo(repo) {}
 
-void DeleteTask::Do(const std::string& id, const std::string& userID) {
-  repo.Delete(id, userID);
+void DeleteTask::Do(const std::string& id, const std::string& user_id) {
+  repo.Delete(id, user_id);
 }
 }  // namespace usecase

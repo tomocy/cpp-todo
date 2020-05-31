@@ -42,7 +42,7 @@ struct Task {
   todo::Task ToTask() const noexcept;
 
   std::string id;
-  std::string userID;
+  std::string user_id;
   std::string name;
   bool completed;
 };
@@ -98,7 +98,7 @@ class Session : public controller::cli::Session {
  public:
   Session(const std::string& workspace) noexcept;
 
-  void SetAuthenticatedUserID(const std::string& userID) noexcept override;
+  void SetAuthenticatedUserID(const std::string& user_id) noexcept override;
 
   std::tuple<std::string, bool> GetAuthenticatedUserID() const
       noexcept override;
@@ -136,17 +136,17 @@ class TaskRepo : public todo::TaskRepo {
 
   std::string NextID() const noexcept override;
 
-  std::vector<todo::Task> Get(const std::string& userID) const
+  std::vector<todo::Task> Get(const std::string& user_id) const
       noexcept override;
 
   std::tuple<todo::Task, bool> FindOfUser(const std::string& id,
-                                          const std::string& userID) const
+                                          const std::string& user_id) const
       noexcept override;
 
   void Save(const todo::Task& task) noexcept override;
 
   void Delete(const std::string& id,
-              const std::string& userID) noexcept override;
+              const std::string& user_id) noexcept override;
 
  private:
   File file;

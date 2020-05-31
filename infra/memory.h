@@ -60,17 +60,17 @@ class TaskRepo : public todo::TaskRepo {
 
   std::string NextID() const noexcept override;
 
-  std::vector<todo::Task> Get(const std::string& userID) const
+  std::vector<todo::Task> Get(const std::string& user_id) const
       noexcept override;
 
   std::tuple<todo::Task, bool> FindOfUser(const std::string& id,
-                                          const std::string& userID) const
+                                          const std::string& user_id) const
       noexcept override;
 
   void Save(const todo::Task& task) noexcept override;
 
   void Delete(const std::string& id,
-              const std::string& userID) noexcept override;
+              const std::string& user_id) noexcept override;
 
   const std::map<std::string, todo::Task>& Tasks() const noexcept;
 

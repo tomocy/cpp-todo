@@ -36,24 +36,24 @@ void from_json(const nlohmann::json& json, User& user) {
 namespace infra::file {
 Task::Task(const todo::Task& task) noexcept
     : id(task.ID()),
-      userID(task.UserID()),
+      user_id(task.UserID()),
       name(task.Name()),
       completed(task.IsCompleted()) {}
 
 todo::Task Task::ToTask() const noexcept {
-  return todo::Task(id, userID, name, completed);
+  return todo::Task(id, user_id, name, completed);
 }
 
 void to_json(nlohmann::json& json, const Task& task) {
   json = nlohmann::json{{"id", task.id},
-                        {"user_id", task.userID},
+                        {"user_id", task.user_id},
                         {"name", task.name},
                         {"completed", task.completed}};
 }
 
 void from_json(const nlohmann::json& json, Task& task) {
   json.at("id").get_to(task.id);
-  json.at("user_id").get_to(task.userID);
+  json.at("user_id").get_to(task.user_id);
   json.at("name").get_to(task.name);
   json.at("completed").get_to(task.completed);
 }
@@ -124,10 +124,10 @@ namespace infra::file {
 Session::Session(const std::string& workspace) noexcept
     : file(File(workspace)) {}
 
-void Session::SetAuthenticatedUserID(const std::string& userID) noexcept {
+void Session::SetAuthenticatedUserID(const std::string& user_id) noexcept {
   auto store = file.Load();
 
-  store.session[kAuthenticatedUserID] = userID;
+  store.session[kAuthenticatedUserID] = user_id;
 
   file.Save(store);
 }
@@ -192,13 +192,13 @@ std::string TaskRepo::NextID() const noexcept {
   return infra::rand::Generate(50);
 }
 
-std::vector<todo::Task> TaskRepo::Get(const std::string& userID) const
+std::vector<todo::Task> TaskRepo::Get(const std::string& user_id) const
     noexcept {
   auto store = file.Load();
 
   auto tasks = std::vector<todo::Task>();
   for (auto [_, task] : store.tasks) {
-    if (task.userID != userID) {
+    if (task.user_id != user_id) {
       continue;
     }
 
@@ -209,13 +209,13 @@ std::vector<todo::Task> TaskRepo::Get(const std::string& userID) const
 }
 
 std::tuple<todo::Task, bool> TaskRepo::FindOfUser(
-    const std::string& id, const std::string& userID) const noexcept {
+    const std::string& id, const std::string& user_id) const noexcept {
   auto store = file.Load();
 
   if (store.tasks.find(id) == store.tasks.end()) {
     return {todo::Task(), false};
   }
-  if (store.tasks.at(id).userID != userID) {
+  if (store.tasks.at(id).user_id != user_id) {
     return {todo::Task(), false};
   }
 
@@ -232,8 +232,8 @@ void TaskRepo::Save(const todo::Task& task) noexcept {
 }
 
 void TaskRepo::Delete(const std::string& id,
-                      const std::string& userID) noexcept {
-  auto [task, found] = FindOfUser(id, userID);
+                      const std::string& user_id) noexcept {
+  auto [task, found] = FindOfUser(id, user_id);
   if (!found) {
     return;
   }

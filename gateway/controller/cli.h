@@ -57,9 +57,9 @@ class Session {
 namespace controller::cli {
 class App {
  public:
-  App(Session& session, todo::UserRepo& userRepo, todo::TaskRepo& taskRepo,
-      const controller::UserRenderer& userRen,
-      const controller::TaskRenderer& taskRen) noexcept;
+  App(Session& session, todo::UserRepo& user_repo, todo::TaskRepo& task_repo,
+      const controller::UserRenderer& user_ren,
+      const controller::TaskRenderer& task_ren) noexcept;
 
   void Run(int n, const char* const* args) const noexcept;
 
@@ -67,10 +67,10 @@ class App {
   void ShowHelp() const noexcept;
 
   Session& session;
-  todo::UserRepo& userRepo;
-  todo::TaskRepo& taskRepo;
-  const controller::UserRenderer& userRenderer;
-  const controller::TaskRenderer& taskRenderer;
+  todo::UserRepo& user_repo;
+  todo::TaskRepo& task_repo;
+  const controller::UserRenderer& user_renderer;
+  const controller::TaskRenderer& task_renderer;
 };
 }  // namespace controller::cli
 
@@ -108,15 +108,15 @@ class TaskApp {
   void Run(const std::vector<std::string>& args) const noexcept;
 
  private:
-  void Get(const std::string& userID) const noexcept;
+  void Get(const std::string& user_id) const noexcept;
 
-  void Create(const std::string& userID, const std::string& name) const
+  void Create(const std::string& user_id, const std::string& name) const
       noexcept;
 
-  void Complete(const std::string& id, const std::string& userID) const
+  void Complete(const std::string& id, const std::string& user_id) const
       noexcept;
 
-  void Delete(const std::string& id, const std::string& userID) const noexcept;
+  void Delete(const std::string& id, const std::string& user_id) const noexcept;
 
   void ShowHelp() const noexcept;
 

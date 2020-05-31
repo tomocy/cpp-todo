@@ -81,26 +81,26 @@ std::string Parser::TrimFlagHyphen(const std::string& s) const noexcept {
 }  // namespace controller::cli
 
 namespace controller::cli {
-App::App(Session& session, todo::UserRepo& userRepo, todo::TaskRepo& taskRepo,
-         const controller::UserRenderer& userRen,
-         const controller::TaskRenderer& taskRen) noexcept
+App::App(Session& session, todo::UserRepo& user_repo, todo::TaskRepo& task_repo,
+         const controller::UserRenderer& user_ren,
+         const controller::TaskRenderer& task_ren) noexcept
     : session(session),
-      userRepo(userRepo),
-      taskRepo(taskRepo),
-      userRenderer(userRen),
-      taskRenderer(taskRen) {}
+      user_repo(user_repo),
+      task_repo(task_repo),
+      user_renderer(user_ren),
+      task_renderer(task_ren) {}
 
 void App::Run(int n, const char* const* const args) const noexcept {
   auto converted = std::vector<std::string>(args + 1, args + n);
   auto cmd = Parser().Parse(converted);
 
   if (cmd.Name() == "user") {
-    auto app = UserApp(session, userRepo, userRenderer);
+    auto app = UserApp(session, user_repo, user_renderer);
     app.Run(cmd.Args());
     return;
   }
   if (cmd.Name() == "task") {
-    auto app = TaskApp(session, taskRepo, taskRenderer);
+    auto app = TaskApp(session, task_repo, task_renderer);
     app.Run(cmd.Args());
     return;
   }

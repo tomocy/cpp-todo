@@ -105,7 +105,7 @@ class Task {
   void setName(const std::string& name);
 
   std::string id;
-  std::string userID;
+  std::string user_id;
   std::string name;
   bool completed;
 };

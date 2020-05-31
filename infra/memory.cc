@@ -65,12 +65,12 @@ std::string TaskRepo::NextID() const noexcept {
   return infra::rand::Generate(50);
 }
 
-std::vector<todo::Task> TaskRepo::Get(const std::string& userID) const
+std::vector<todo::Task> TaskRepo::Get(const std::string& user_id) const
     noexcept {
   auto tasks = std::vector<todo::Task>();
 
   for (auto [_, task] : this->tasks) {
-    if (task.UserID() != userID) {
+    if (task.UserID() != user_id) {
       continue;
     }
 
@@ -81,11 +81,11 @@ std::vector<todo::Task> TaskRepo::Get(const std::string& userID) const
 }
 
 std::tuple<todo::Task, bool> TaskRepo::FindOfUser(
-    const std::string& id, const std::string& userID) const noexcept {
+    const std::string& id, const std::string& user_id) const noexcept {
   if (tasks.find(id) == tasks.end()) {
     return {todo::Task(), false};
   }
-  if (tasks.at(id).UserID() != userID) {
+  if (tasks.at(id).UserID() != user_id) {
     return {todo::Task(), false};
   }
 
@@ -97,8 +97,8 @@ void TaskRepo::Save(const todo::Task& task) noexcept {
 }
 
 void TaskRepo::Delete(const std::string& id,
-                      const std::string& userID) noexcept {
-  auto [_, found] = FindOfUser(id, userID);
+                      const std::string& user_id) noexcept {
+  auto [_, found] = FindOfUser(id, user_id);
   if (!found) {
     return;
   }
